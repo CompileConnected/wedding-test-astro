@@ -1,0 +1,24 @@
+---
+export interface Props {
+	title: string;
+  start: boolean;
+  end: boolean;
+}
+
+const { title, start, end } = Astro.props;
+---
+
+<button type="button" class:list={[
+'inline-flex',
+'flex-col',
+'items-center',
+'justify-center',
+'px-5',
+'border-r',
+'border-gray-200', 
+'hover:bg-gray-50',
+{ 'rounded-l-full': start },
+{ 'rounded-r-full': end }]}>
+			<slot />
+  <span class="invisible h-0 sm:h-2 sm:visible sm:text-sm text-gray-500 group-hover:text-blue-600">{title}</span>
+</button>
