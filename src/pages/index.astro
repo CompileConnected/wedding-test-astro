@@ -1,79 +1,153 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
+import BottomItem from "../components/BottomItem.astro";
+
+import "../styles/main.css";
 ---
 
-<Layout title="Welcome to Astro.">
-  <main>
-    <h1 class="text-6xl font-bold">
-      Welcome to <span class="text-gradient">Astro</span>
-    </h1>
-    <p class="instructions">
-      To get started, open the directory <code>src/pages</code> in your project.<br
+<Layout title="Landing">
+  <main class="mx-auto">
+    <div
+      id="home"
+      class="section flex flex-col flex-wrap justify-center items-center h-screen"
+    >
+      <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
+      <div class="text-base sm:text-xl font-bold p-0 text-center">Home</div>
+    </div>
+
+  
+    <div
+      id="profile"
+      class="section flex flex-col flex-wrap justify-center items-center h-screen"
+    >
+      <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
+      <div class="text-base sm:text-xl font-bold p-0 text-center">Profile</div>
+    </div>
+  
+    <div
+      id="story"
+      class="section flex flex-col flex-wrap justify-center items-center h-screen"
+    >
+      <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
+      <div class="text-base sm:text-xl font-bold p-0 text-center">Story</div>
+    </div>
+
+    <div
+    id="wallet"
+    class="section flex flex-col flex-wrap justify-center items-center h-screen"
+  >
+    <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
+    <div class="text-base sm:text-xl font-bold p-0 text-center">Wallet</div>
+  </div>
+
+
+    <nav
+      class="fixed z-50 bottom-4 w-full max-w-lg -translate-x-1/2 left-1/2 bg-gray-800 text-white flex justify-around py-4"
+    >
+      <BottomItem title="Home" navigateTo="home" iconName="mdi:home" />
+      <BottomItem title="Profile" navigateTo="profile" iconName="mdi:account" />
+      <BottomItem
+        title="Story"
+        navigateTo="story"
+        iconName="ic:baseline-edit"
       />
-      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message
-      above.
-    </p>
-    <ul role="list" class="grid sm:grid-cols-2 gap-2">
-      <Card
-        href="https://docs.astro.build/"
-        title="Documentation"
-        body="Learn how Astro works and explore the official API docs."
-      />
-      <Card
-        href="https://astro.build/integrations/"
-        title="Integrations"
-        body="Supercharge your project with new frameworks and libraries."
-      />
-      <Card
-        href="https://astro.build/themes/"
-        title="Themes"
-        body="Explore a galaxy of community-built starter themes."
-      />
-      <Card
-        href="https://astro.build/chat/"
-        title="Community"
-        body="Come say hi to our amazing Discord community. ❤️"
-      />
-    </ul>
+      <BottomItem title="Gallery" navigateTo="gallery" iconName="solar:gallery-linear" />
+
+      <BottomItem title="Wallet" navigateTo="wallet" iconName="uil:wallet" />
+
+      <BottomItem title="Test" navigateTo="test" iconName="mdi:power" />
+    </nav>
   </main>
 </Layout>
+<script>
+  function smoothScrollTo(targetId) {
+    const target = document.getElementById(targetId);
+    if (target) {
+      // Calculate the distance between the top of the document and the target element
+      const targetOffsetTop = target.getBoundingClientRect().top;
 
+      // Use the 'scrollTo' function with behavior 'smooth' to achieve smooth scrolling
+      window.scrollTo({
+        top: targetOffsetTop + window.pageYOffset, // Add current scroll position to the target offset
+        behavior: "smooth",
+      });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const sections = document.querySelectorAll(".section");
+    const navigationItems = document.querySelectorAll(".nav-item")
+    
+    function setBottomNavigationClick() {
+      navigationItems.forEach((x) => {
+        x.addEventListener("click", (e) => {
+          smoothScrollTo(x.id)
+        })
+      })
+    }
+
+    function getActiveSection() {
+      let currentSection = sections[0];
+      let minDistance = Math.abs(currentSection.getBoundingClientRect().top);
+
+      sections.forEach((section) => {
+        const distance = Math.abs(section.getBoundingClientRect().top);
+        if (distance < minDistance) {
+          minDistance = distance;
+          currentSection = section;
+        }
+      });
+
+      return currentSection;
+    }
+
+    function setActionNavItem() {
+       let currentSection = getActiveSection()
+       navigationItems.forEach((nav) => {
+          const icon = nav.querySelector('.nav-item-icon');
+          const text = nav.querySelector('.nav-item-text');
+      
+          if (nav.id === currentSection.id) {
+            icon.classList.remove('text-gray-500', 'group-hover:text-blue-600')
+            text.classList.remove('group-hover:text-blue-600')
+            icon.classList.add('text-blue-600')
+            text.classList.add('text-blue-600')
+          } else {
+            icon.classList.remove('text-blue-600')
+            text.classList.remove('text-blue-600')
+            icon.classList.add('text-gray-500', 'group-hover:text-blue-600')
+            text.classList.add('group-hover:text-blue-600')
+          }
+       }) 
+    }
+      // Debounce function
+    function debounce(func, delay) {
+      let timer;
+      return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
+    const debouncedSetActiveNavItem = debounce(setActionNavItem, 100);
+    
+    setActionNavItem();
+    setBottomNavigationClick();
+
+    document.addEventListener("scroll", debouncedSetActiveNavItem);
+
+    document.addEventListener('onselectstart', function(event) {
+      event.preventDefault();
+    });
+  })
+
+</script>
 <style>
+  .section {
+
+  }
+
   main {
-    margin: auto;
-    padding: 1.5rem;
-    max-width: 60ch;
-  }
-  h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    margin: 0;
-  }
-  .text-gradient {
     background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400%;
-    background-position: 0%;
-  }
-  .instructions {
-    line-height: 1.6;
-    margin: 1rem 0;
-    border: 1px solid rgba(var(--accent), 25%);
-    background-color: white;
-    padding: 1rem;
-    border-radius: 0.4rem;
-  }
-  .instructions code {
-    font-size: 0.875em;
-    font-weight: bold;
-    background: rgba(var(--accent), 12%);
-    color: rgb(var(--accent));
-    border-radius: 4px;
-    padding: 0.3em 0.45em;
-  }
-  .instructions strong {
-    color: rgb(var(--accent));
   }
 </style>
