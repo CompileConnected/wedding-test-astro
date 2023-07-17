@@ -136,6 +136,9 @@ import "../styles/main.css";
 
     document.addEventListener("scroll", debouncedSetActiveNavItem);
 
+    document.addEventListener('onselectstart', function(event) {
+      event.preventDefault();
+    });
   })
 
 </script>
