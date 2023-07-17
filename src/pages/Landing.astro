@@ -9,27 +9,37 @@ import "../styles/main.css";
   <main class="mx-auto">
     <div
       id="home"
-      class="flex flex-col flex-wrap justify-center items-center h-screen"
+      class="section flex flex-col flex-wrap justify-center items-center h-screen"
     >
       <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
       <div class="text-base sm:text-xl font-bold p-0 text-center">Home</div>
     </div>
 
+  
     <div
-      id="wallet"
-      class="flex flex-col flex-wrap justify-center items-center h-screen"
+      id="profile"
+      class="section flex flex-col flex-wrap justify-center items-center h-screen"
     >
       <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
-      <div class="text-base sm:text-xl font-bold p-0 text-center">Wallet</div>
+      <div class="text-base sm:text-xl font-bold p-0 text-center">Profile</div>
     </div>
-
+  
     <div
       id="story"
-      class="flex flex-col flex-wrap justify-center items-center h-screen"
+      class="section flex flex-col flex-wrap justify-center items-center h-screen"
     >
       <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
       <div class="text-base sm:text-xl font-bold p-0 text-center">Story</div>
     </div>
+
+    <div
+    id="wallet"
+    class="section flex flex-col flex-wrap justify-center items-center h-screen"
+  >
+    <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
+    <div class="text-base sm:text-xl font-bold p-0 text-center">Wallet</div>
+  </div>
+
 
     <nav
       class="fixed z-50 bottom-4 w-full max-w-lg -translate-x-1/2 left-1/2 bg-gray-800 text-white flex justify-around py-4"
@@ -64,21 +74,76 @@ import "../styles/main.css";
     }
   }
 
-  const homeButton = document.getElementById("navigate-to-home");
-  const walletButton = document.getElementById("navigate-to-wallet");
-  const storyButton = document.getElementById("navigate-to-story");
-  homeButton.addEventListener("click", () => {
-    smoothScrollTo("home");
-  });
-  storyButton.addEventListener("click", () => {
-    smoothScrollTo("story");
-  });
+  document.addEventListener("DOMContentLoaded", function() {
+    const sections = document.querySelectorAll(".section");
+    const navigationItems = document.querySelectorAll(".nav-item")
+    
+    function setBottomNavigationClick() {
+      navigationItems.forEach((x) => {
+        x.addEventListener("click", (e) => {
+          smoothScrollTo(x.id)
+        })
+      })
+    }
 
-  walletButton.addEventListener("click", () => {
-    smoothScrollTo("wallet");
-  });
+    function getActiveSection() {
+      let currentSection = sections[0];
+      let minDistance = Math.abs(currentSection.getBoundingClientRect().top);
+
+      sections.forEach((section) => {
+        const distance = Math.abs(section.getBoundingClientRect().top);
+        if (distance < minDistance) {
+          minDistance = distance;
+          currentSection = section;
+        }
+      });
+
+      return currentSection;
+    }
+
+    function setActionNavItem() {
+       let currentSection = getActiveSection()
+       navigationItems.forEach((nav) => {
+          const icon = nav.querySelector('.nav-item-icon');
+          const text = nav.querySelector('.nav-item-text');
+      
+          if (nav.id === currentSection.id) {
+            icon.classList.remove('text-gray-500', 'group-hover:text-blue-600')
+            text.classList.remove('group-hover:text-blue-600')
+            icon.classList.add('text-blue-600')
+            text.classList.add('text-blue-600')
+          } else {
+            icon.classList.remove('text-blue-600')
+            text.classList.remove('text-blue-600')
+            icon.classList.add('text-gray-500', 'group-hover:text-blue-600')
+            text.classList.add('group-hover:text-blue-600')
+          }
+       }) 
+    }
+      // Debounce function
+    function debounce(func, delay) {
+      let timer;
+      return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
+    const debouncedSetActiveNavItem = debounce(setActionNavItem, 100);
+    
+    setActionNavItem();
+    setBottomNavigationClick();
+
+    document.addEventListener("scroll", debouncedSetActiveNavItem);
+
+  })
+
 </script>
 <style>
+  .section {
+
+  }
+
   main {
     background-image: var(--accent-gradient);
   }

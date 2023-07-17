@@ -8,12 +8,23 @@ const { title, navigateTo, iconName } = Astro.props;
 const x = iconName.split(":")
 ---
 
-<a
-  href={"#" + navigateTo}
-  class="flex flex-col items-center justify-center group"
+<div
+  id={navigateTo}
+  class="nav-item flex flex-col items-center justify-center group"
 >
-<div class="w-5 h-5 mb-1 text-gray-500 group-hover:text-blue-600">
+<div class="nav-item-icon w-5 h-5 mb-1 text-gray-500 group-hover:text-blue-600">
     <iconify-icon icon={iconName} width="24" height="24"></iconify-icon>
 </div>
-  <span class="text-[0.65rem] sm:text-sm group-hover:text-blue-600">{title}</span>
-</a>
+  <span class="nav-item-text text-[0.65rem] sm:text-sm group-hover:text-blue-600">{title}</span>
+</div>
+<style>
+    .nav-item {
+
+    }
+    .nav-item-icon {
+
+    }
+    .nav-item-text {
+
+    }
+</style>
