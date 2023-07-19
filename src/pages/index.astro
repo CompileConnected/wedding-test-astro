@@ -1,153 +1,190 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import BottomItem from "../components/BottomItem.astro";
+import Layout from '../layouts/Layout.astro'
+import BottomItem from '../components/BottomItem.astro'
+import GalleryVue from '../partial/Gallery.vue'
 
-import "../styles/main.css";
+import '../styles/main.css'
+const images = [
+	{
+		id: 1,
+		url: 'https://via.placeholder.com/150x150',
+		type: 'image'
+	},
+	{
+		id: 2,
+		url: 'https://via.placeholder.com/150x150',
+		type: 'image'
+	},
+	{
+		id: 3,
+		url: 'https://via.placeholder.com/150x150',
+		type: 'image'
+	},
+	{
+		id: 4,
+		url: 'https://via.placeholder.com/150x150',
+		type: 'image'
+	},
+	{
+		id: 5,
+		url: 'https://via.placeholder.com/150x150',
+		type: 'image'
+	},
+	{
+		id: 6,
+		url: 'https://via.placeholder.com/150x150',
+		type: 'image'
+	},
+	{
+		id: 7,
+		url: 'https://via.placeholder.com/150x150',
+		type: 'image'
+	},
+	{
+		id: 8,
+		url: 'https://via.placeholder.com/150x150',
+		type: 'image'
+	},
+	{
+		id: 9,
+		url: 'https://via.placeholder.com/150x150',
+		type: 'image'
+	}
+]
 ---
 
 <Layout title="Landing">
-  <main class="mx-auto">
-    <div
-      id="home"
-      class="section flex flex-col flex-wrap justify-center items-center h-screen"
-    >
-      <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
-      <div class="text-base sm:text-xl font-bold p-0 text-center">Home</div>
-    </div>
+	<main class="mx-auto">
+		<div id="home" class="section flex flex-col flex-wrap justify-center items-center h-screen">
+			<div class="text-center text-4xl sm:text-6xl font-bold">Page</div>
+			<div class="text-base sm:text-xl font-bold p-0 text-center">Home</div>
+		</div>
 
-  
-    <div
-      id="profile"
-      class="section flex flex-col flex-wrap justify-center items-center h-screen"
-    >
-      <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
-      <div class="text-base sm:text-xl font-bold p-0 text-center">Profile</div>
-    </div>
-  
-    <div
-      id="story"
-      class="section flex flex-col flex-wrap justify-center items-center h-screen"
-    >
-      <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
-      <div class="text-base sm:text-xl font-bold p-0 text-center">Story</div>
-    </div>
+		<div id="profile" class="section flex flex-col flex-wrap justify-center items-center h-screen">
+			<div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
+			<div class="text-base sm:text-xl font-bold p-0 text-center">Profile</div>
+		</div>
 
-    <div
-    id="wallet"
-    class="section flex flex-col flex-wrap justify-center items-center h-screen"
-  >
-    <div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
-    <div class="text-base sm:text-xl font-bold p-0 text-center">Wallet</div>
-  </div>
+		<div
+			id="gallery"
+			class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap"
+		>
+			<div class="text-4xl sm:text-6xl font-bold text-center">Our Gallery</div>
 
+			<GalleryVue client:load client:load images={images} />
+		</div>
 
-    <nav
-      class="fixed z-50 bottom-4 w-full max-w-lg -translate-x-1/2 left-1/2 bg-gray-800 text-white flex justify-around py-4"
-    >
-      <BottomItem title="Home" navigateTo="home" iconName="mdi:home" />
-      <BottomItem title="Profile" navigateTo="profile" iconName="mdi:account" />
-      <BottomItem
-        title="Story"
-        navigateTo="story"
-        iconName="ic:baseline-edit"
-      />
-      <BottomItem title="Gallery" navigateTo="gallery" iconName="solar:gallery-linear" />
+		<div id="story" class="section flex flex-col flex-wrap justify-center items-center h-screen">
+			<div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
+			<div class="text-base sm:text-xl font-bold p-0 text-center">Story</div>
+		</div>
 
-      <BottomItem title="Wallet" navigateTo="wallet" iconName="uil:wallet" />
+		<div id="wallet" class="section flex flex-col flex-wrap justify-center items-center h-screen">
+			<div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
+			<div class="text-base sm:text-xl font-bold p-0 text-center">Wallet</div>
+		</div>
 
-      <BottomItem title="Test" navigateTo="test" iconName="mdi:power" />
-    </nav>
-  </main>
+		<nav
+			class="fixed z-50 bottom-4 w-full max-w-lg -translate-x-1/2 left-1/2 bg-gray-800 text-white flex justify-around py-4"
+		>
+			<BottomItem title="Home" navigateTo="home" iconName="mdi:home" />
+			<BottomItem title="Profile" navigateTo="profile" iconName="mdi:account" />
+			<BottomItem title="Story" navigateTo="story" iconName="ic:baseline-edit" />
+			<BottomItem title="Gallery" navigateTo="gallery" iconName="solar:gallery-linear" />
+
+			<BottomItem title="Wallet" navigateTo="wallet" iconName="uil:wallet" />
+
+			<BottomItem title="Test" navigateTo="test" iconName="mdi:power" />
+		</nav>
+	</main>
 </Layout>
 <script>
-  function smoothScrollTo(targetId) {
-    const target = document.getElementById(targetId);
-    if (target) {
-      // Calculate the distance between the top of the document and the target element
-      const targetOffsetTop = target.getBoundingClientRect().top;
+	function smoothScrollTo(targetId: string) {
+		const target = document.getElementById(targetId)
+		if (target) {
+			// Calculate the distance between the top of the document and the target element
+			const targetOffsetTop = target.getBoundingClientRect().top
 
-      // Use the 'scrollTo' function with behavior 'smooth' to achieve smooth scrolling
-      window.scrollTo({
-        top: targetOffsetTop + window.pageYOffset, // Add current scroll position to the target offset
-        behavior: "smooth",
-      });
-    }
-  }
+			// Use the 'scrollTo' function with behavior 'smooth' to achieve smooth scrolling
+			window.scrollTo({
+				top: targetOffsetTop + window.pageYOffset, // Add current scroll position to the target offset
+				behavior: 'smooth'
+			})
+		}
+	}
 
-  document.addEventListener("DOMContentLoaded", function() {
-    const sections = document.querySelectorAll(".section");
-    const navigationItems = document.querySelectorAll(".nav-item")
-    
-    function setBottomNavigationClick() {
-      navigationItems.forEach((x) => {
-        x.addEventListener("click", (e) => {
-          smoothScrollTo(x.id)
-        })
-      })
-    }
+	document.addEventListener('DOMContentLoaded', function () {
+		const sections = document.querySelectorAll('.section')
+		const navigationItems = document.querySelectorAll('.nav-item')
 
-    function getActiveSection() {
-      let currentSection = sections[0];
-      let minDistance = Math.abs(currentSection.getBoundingClientRect().top);
+		function setBottomNavigationClick() {
+			navigationItems.forEach((x) => {
+				x.addEventListener('click', (e) => {
+					smoothScrollTo(x.id)
+				})
+			})
+		}
 
-      sections.forEach((section) => {
-        const distance = Math.abs(section.getBoundingClientRect().top);
-        if (distance < minDistance) {
-          minDistance = distance;
-          currentSection = section;
-        }
-      });
+		function getActiveSection() {
+			let currentSection = sections[0]
+			let minDistance = Math.abs(currentSection.getBoundingClientRect().top)
 
-      return currentSection;
-    }
+			sections.forEach((section) => {
+				const distance = Math.abs(section.getBoundingClientRect().top)
+				if (distance < minDistance) {
+					minDistance = distance
+					currentSection = section
+				}
+			})
 
-    function setActionNavItem() {
-       let currentSection = getActiveSection()
-       navigationItems.forEach((nav) => {
-          const icon = nav.querySelector('.nav-item-icon');
-          const text = nav.querySelector('.nav-item-text');
-      
-          if (nav.id === currentSection.id) {
-            icon.classList.remove('text-gray-500', 'group-hover:text-blue-600')
-            text.classList.remove('group-hover:text-blue-600')
-            icon.classList.add('text-blue-600')
-            text.classList.add('text-blue-600')
-          } else {
-            icon.classList.remove('text-blue-600')
-            text.classList.remove('text-blue-600')
-            icon.classList.add('text-gray-500', 'group-hover:text-blue-600')
-            text.classList.add('group-hover:text-blue-600')
-          }
-       }) 
-    }
-      // Debounce function
-    function debounce(func, delay) {
-      let timer;
-      return function(...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => func.apply(this, args), delay);
-      };
-    }
+			return currentSection
+		}
 
-    const debouncedSetActiveNavItem = debounce(setActionNavItem, 100);
-    
-    setActionNavItem();
-    setBottomNavigationClick();
+		function setActionNavItem() {
+			let currentSection = getActiveSection()
+			navigationItems.forEach((nav) => {
+				const icon = nav.querySelector('.nav-item-icon')
+				const text = nav.querySelector('.nav-item-text')
 
-    document.addEventListener("scroll", debouncedSetActiveNavItem);
+				if (nav.id === currentSection.id) {
+					icon.classList.remove('text-gray-500', 'group-hover:text-blue-600')
+					text.classList.remove('group-hover:text-blue-600')
+					icon.classList.add('text-blue-600')
+					text.classList.add('text-blue-600')
+				} else {
+					icon.classList.remove('text-blue-600')
+					text.classList.remove('text-blue-600')
+					icon.classList.add('text-gray-500', 'group-hover:text-blue-600')
+					text.classList.add('group-hover:text-blue-600')
+				}
+			})
+		}
+		// Debounce function
+		function debounce(func: { (): void; apply?: any }, delay: number) {
+			let timer: NodeJS.Timeout
+			return function (...args: any) {
+				clearTimeout(timer)
+				timer = setTimeout(() => func.apply(this, args), delay)
+			}
+		}
 
-    document.addEventListener('onselectstart', function(event) {
-      event.preventDefault();
-    });
-  })
+		const debouncedSetActiveNavItem = debounce(setActionNavItem, 100)
 
+		setActionNavItem()
+		setBottomNavigationClick()
+
+		document.addEventListener('scroll', debouncedSetActiveNavItem)
+
+		document.addEventListener('onselectstart', function (event) {
+			event.preventDefault()
+		})
+	})
 </script>
 <style>
-  .section {
+	.section {
+	}
 
-  }
-
-  main {
-    background-image: var(--accent-gradient);
-  }
+	main {
+		background-image: var(--accent-gradient);
+	}
 </style>
