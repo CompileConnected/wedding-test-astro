@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import BottomItem from '../components/BottomItem.astro'
+import Title from '../components/Title.astro'
 import GalleryVue from '../partial/Gallery.vue'
-
 import '../styles/main.css'
 const images = [
 	{
@@ -56,32 +56,48 @@ const images = [
 <Layout title="Landing">
 	<main class="mx-auto">
 		<div id="home" class="section flex flex-col flex-wrap justify-center items-center h-screen">
-			<div class="text-center text-4xl sm:text-6xl font-bold">Page</div>
-			<div class="text-base sm:text-xl font-bold p-0 text-center">Home</div>
+			<div class="text-base sm:text-md font-bold p-0 text-center py-[2rem]">
+				Sabtu, 25 November 2023
+			</div>
+			<div class="satisfy text-center text-5xl sm:text-8xl font-bold">Yohanes & Citra</div>
+			<div class="text-base sm:text-md font-bold p-0 text-center">
+				<br />Dear Ayana <br /> We're Getting Married
+			</div>
 		</div>
 
 		<div id="profile" class="section flex flex-col flex-wrap justify-center items-center h-screen">
-			<div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
-			<div class="text-base sm:text-xl font-bold p-0 text-center">Profile</div>
+			<Title
+				title="Bride and Groom"
+				subTitle="With joy and His grace, we invite you to join us in the celebration of the wedding"
+			/>
 		</div>
 
 		<div
 			id="gallery"
 			class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap"
 		>
-			<div class="text-4xl sm:text-6xl font-bold text-center">Our Gallery</div>
-
+			<Title title="Our Gallery" />
 			<GalleryVue client:load client:load images={images} />
+			<div class="py-[3rem]"></div>
+			<Title title="Our Video" />
+
+			<iframe
+				width="560"
+				height="315"
+				src="https://www.youtube-nocookie.com/embed/hF0I9h7C4A4?controls=0&start=8"
+				title="YouTube video player"
+				frameborder="0"
+				class="w-full sm:w-3/4 lg:w-1/2 aspect-auto"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				allowfullscreen></iframe>
 		</div>
 
 		<div id="story" class="section flex flex-col flex-wrap justify-center items-center h-screen">
-			<div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
-			<div class="text-base sm:text-xl font-bold p-0 text-center">Story</div>
+			<Title title="Our Story" subTitle="Time flies when you're in the moment of joy." />
 		</div>
 
 		<div id="wallet" class="section flex flex-col flex-wrap justify-center items-center h-screen">
-			<div class="text-4xl sm:text-6xl font-bold text-center">Page</div>
-			<div class="text-base sm:text-xl font-bold p-0 text-center">Wallet</div>
+			<Title title="Present" />
 		</div>
 
 		<nav
@@ -89,12 +105,11 @@ const images = [
 		>
 			<BottomItem title="Home" navigateTo="home" iconName="mdi:home" />
 			<BottomItem title="Profile" navigateTo="profile" iconName="mdi:account" />
-			<BottomItem title="Story" navigateTo="story" iconName="ic:baseline-edit" />
+			<BottomItem title="Event" navigateTo="event" iconName="iconoir:calendar" />
+
 			<BottomItem title="Gallery" navigateTo="gallery" iconName="solar:gallery-linear" />
-
-			<BottomItem title="Wallet" navigateTo="wallet" iconName="uil:wallet" />
-
-			<BottomItem title="Test" navigateTo="test" iconName="mdi:power" />
+			<BottomItem title="Story" navigateTo="story" iconName="ic:baseline-edit" />
+			<BottomItem title="Hadiah" navigateTo="wallet" iconName="basil:present-outline" />
 		</nav>
 	</main>
 </Layout>

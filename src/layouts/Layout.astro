@@ -1,6 +1,6 @@
 ---
 import '../styles/main.css'
-
+import '@fontsource/satisfy'
 export interface Props {
 	title: string
 }
@@ -30,6 +30,9 @@ const { title } = Astro.props
 	</body>
 </html>
 <style is:global>
+	.satisfy {
+		font-family: 'Satisfy', sans-serif;
+	}
 	body::-webkit-scrollbar {
 		display: none;
 	}
