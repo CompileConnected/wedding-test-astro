@@ -12,6 +12,10 @@
           "value": "DENY"
         },
         {
+          "key":"Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=(),fullscreen=(self \"https://www.youtube.com\")"
+        },
+        {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
         },
