@@ -72,6 +72,13 @@ const images = [
 			/>
 		</div>
 
+		<div id="event" class="section flex flex-col flex-wrap justify-center items-center h-screen">
+			<Title
+				title="Event"
+				subTitle="With joy and His grace, we invite you to join us in the celebration of the wedding"
+			/>
+		</div>
+
 		<div
 			id="gallery"
 			class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap"
@@ -81,7 +88,7 @@ const images = [
 			<div class="py-[3rem]"></div>
 			<Title title="Our Video" />
 
-			<iframe
+			<iframe client:visible
 				width="560"
 				height="315"
 				src="https://www.youtube-nocookie.com/embed/hF0I9h7C4A4?controls=0&start=8"
@@ -156,23 +163,26 @@ const images = [
 		}
 
 		function setActionNavItem() {
+			var iindex = 0
 			let currentSection = getActiveSection()
-			navigationItems.forEach((nav) => {
+
+			navigationItems.forEach((nav, index) => {
 				const icon = nav.querySelector('.nav-item-icon')
 				const text = nav.querySelector('.nav-item-text')
-
+				icon.classList.remove('text-blue-600')
+				text.classList.remove('text-blue-600')
+				icon.classList.add('text-gray-500')
 				if (nav.id === currentSection.id) {
-					icon.classList.remove('text-gray-500', 'group-hover:text-blue-600')
-					text.classList.remove('group-hover:text-blue-600')
-					icon.classList.add('text-blue-600')
-					text.classList.add('text-blue-600')
-				} else {
-					icon.classList.remove('text-blue-600')
-					text.classList.remove('text-blue-600')
-					icon.classList.add('text-gray-500', 'group-hover:text-blue-600')
-					text.classList.add('group-hover:text-blue-600')
+					iindex = index
 				}
 			})
+
+			const icon = navigationItems[iindex].querySelector('.nav-item-icon')
+			const text = navigationItems[iindex].querySelector('.nav-item-text')
+
+			icon.classList.remove('text-gray-500')
+			icon.classList.add('text-blue-600')
+			text.classList.add('text-blue-600')
 		}
 		// Debounce function
 		function debounce(func: { (): void; apply?: any }, delay: number) {
