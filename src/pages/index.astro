@@ -2,53 +2,45 @@
 import Layout from '../layouts/Layout.astro'
 import BottomItem from '../components/BottomItem.astro'
 import Title from '../components/Title.astro'
-import GalleryVue from '../partial/Gallery.vue'
+import Gallery from '../components/Gallery.astro'
 import '../styles/main.css'
+
 const images = [
 	{
-		id: 1,
-		url: 'https://via.placeholder.com/150x150',
-		type: 'image'
+		id: "1",
+		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: 2,
-		url: 'https://via.placeholder.com/150x150',
-		type: 'image'
+		id: "2",
+		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: 3,
-		url: 'https://via.placeholder.com/150x150',
-		type: 'image'
+		id: "3",
+		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: 4,
-		url: 'https://via.placeholder.com/150x150',
-		type: 'image'
+		id: "4",
+		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: 5,
-		url: 'https://via.placeholder.com/150x150',
-		type: 'image'
+		id: "5",
+		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: 6,
-		url: 'https://via.placeholder.com/150x150',
-		type: 'image'
+		id: "6",
+		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: 7,
-		url: 'https://via.placeholder.com/150x150',
-		type: 'image'
+		id: "7",
+		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: 8,
-		url: 'https://via.placeholder.com/150x150',
-		type: 'image'
+		id: "8",
+		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: 9,
-		url: 'https://via.placeholder.com/150x150',
-		type: 'image'
+		id: "9",
+		url: 'https://via.placeholder.com/150x150'
 	}
 ]
 ---
@@ -84,11 +76,13 @@ const images = [
 			class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap"
 		>
 			<Title title="Our Gallery" />
-			<GalleryVue client:load client:load images={images} />
+			<Gallery images={images} />
+			
 			<div class="py-[3rem]"></div>
 			<Title title="Our Video" />
 
-			<iframe client:visible
+			<iframe
+				client:visible
 				width="560"
 				height="315"
 				src="https://www.youtube-nocookie.com/embed/hF0I9h7C4A4?controls=0&start=8"

@@ -1,62 +1,79 @@
 ---
 import '../styles/main.css'
 import '@fontsource/satisfy'
-export interface Props {
-	title: string
-}
+import { ViewTransitions } from 'astro:transitions'
 
-const { title } = Astro.props
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
+	
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
 		<meta name="robots" content="noindex,nofollow" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
 		<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-		
-		<!-- security options -->
-		<meta name="referrer" content="no-referrer">
 
-		<title>{title}</title>
+		<!-- security options -->
+		<meta name="referrer" content="no-referrer" />
+		<meta name="view-transition" content="same-origin" />
+		<title>The Wedding of Yohanes & Citra</title>
+		<meta name="description" content="Sabtu, 25 Novemeber 2023" />
+
+		<meta property="og:image" content="https://via.placeholder.com/800x600" />
+		<meta property="og:title" content="The Wedding of Yohanes & Citra" />
+		<meta property="og:description" content="Sabtu, 25 Novemeber 2023, Resepsi pukul 18:00 WIB" />
+		<meta property="og:url" content="https://yohanes-citra.vercel.app/" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="The Wedding of Yohanes & Citra" />
+
+		
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="The Wedding of Yohanes & Citra" />
+		<meta name="twitter:description" content="Sabtu, 25 Novemeber 2023" />
+		<meta name="twitter:image" content="https://via.placeholder.com/800x600" />
+
+		<!-- fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+
+		<ViewTransitions />
 	</head>
-	<body class="select-none">
-		<main id="main-content">
+	<body class="select-none ">
+		<main id="main-content" class="bg-white rounded-lg shadow-lg p-6 mx-auto max-w-screen-md ">
 			<slot />
 		</main>
 	</body>
-</html>
-<style is:global>
-	.satisfy {
-		font-family: 'Satisfy', sans-serif;
-	}
-	body::-webkit-scrollbar {
-		display: none;
-	}
+	<style is:global>
+		.satisfy {
+			font-family: 'Satisfy', sans-serif;
+		}
+		body::-webkit-scrollbar {
+			display: none;
+		}
 
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background-color: #f6f6f6;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>
+		:root {
+			--accent: 124, 58, 237;
+			--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
+		}
+		html {
+			font-family: system-ui, sans-serif;
+			background-color: #f6f6f6;
+		}
+		code {
+			font-family:
+				Menlo,
+				Monaco,
+				Lucida Console,
+				Liberation Mono,
+				DejaVu Sans Mono,
+				Bitstream Vera Sans Mono,
+				Courier New,
+				monospace;
+		}
+	</style>
+</html>
