@@ -3,14 +3,13 @@ import '../styles/main.css'
 import smc from '../../public/social-media-cover2.jpg'
 import '@fontsource/satisfy'
 import { ViewTransitions } from 'astro:transitions'
-
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-	
+
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 
@@ -31,7 +30,6 @@ import { ViewTransitions } from 'astro:transitions'
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="The Wedding of Yohanes & Citra" />
 
-		
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content="The Wedding of Yohanes & Citra" />
 		<meta name="twitter:description" content="Sabtu, 25 Novemeber 2023" />
@@ -41,40 +39,39 @@ import { ViewTransitions } from 'astro:transitions'
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-
 		<ViewTransitions />
 	</head>
-	<body class="select-none ">
-		<main id="main-content" class="bg-white rounded-lg shadow-lg p-6 mx-auto max-w-screen-md ">
+	<body class="select-none">
+		<main id="main-content" class="bg-white rounded-lg shadow-lg mx-auto max-w-screen-md md:max-w-screen-sm">
 			<slot />
 		</main>
-	</body>
-	<style is:global>
-		.satisfy {
-			font-family: 'Satisfy', sans-serif;
-		}
-		body::-webkit-scrollbar {
-			display: none;
-		}
+		<style is:global>
+			.satisfy {
+				font-family: 'Satisfy', sans-serif;
+			}
+			body::-webkit-scrollbar {
+				display: none;
+			}
 
-		:root {
-			--accent: 124, 58, 237;
-			--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-		}
-		html {
-			font-family: system-ui, sans-serif;
-			background-color: #f6f6f6;
-		}
-		code {
-			font-family:
-				Menlo,
-				Monaco,
-				Lucida Console,
-				Liberation Mono,
-				DejaVu Sans Mono,
-				Bitstream Vera Sans Mono,
-				Courier New,
-				monospace;
-		}
-	</style>
+			:root {
+				--accent: 124, 58, 237;
+				--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
+			}
+			html {
+				font-family: system-ui, sans-serif;
+				background-color: #f6f6f6;
+			}
+			code {
+				font-family:
+					Menlo,
+					Monaco,
+					Lucida Console,
+					Liberation Mono,
+					DejaVu Sans Mono,
+					Bitstream Vera Sans Mono,
+					Courier New,
+					monospace;
+			}
+		</style>
+	</body>
 </html>

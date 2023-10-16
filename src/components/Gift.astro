@@ -1,0 +1,67 @@
+---
+export interface Bank {
+	bankName: string
+	accountNumber: string
+	accountName: string
+}
+export interface Props {
+	banks: Bank[]
+}
+const { banks } = Astro.props
+---
+
+<>
+	<div class="relative overflow-hidden p-10 mb-20 rounded-lg shadow-xl">
+		<div data-aos="fade-in" class="relative z-10 aos-init aos-animate">
+			<div class="mb-8">
+				<h2
+					class="text-center satisfy text-4xl font-bold overflow-visible aos-init aos-animate"
+					data-aos="zoom-out"
+				>
+					<span class="overflow-visible">Send Gifts</span>
+				</h2>
+			</div>
+			<div class="mb-4">
+				<p class="text-base text-center overflow-visible">
+					<span class="overflow-visible"
+						>Hadiah dari Anda akan menambah kebahagian di hari pernikahan Kami.</span
+					>
+				</p>
+			</div>
+			<div class="relative">
+				<div>
+					<div class="text-center pt-2">
+						<p class="mb-4 text-sm">Transfer langsung ke rekening yang tertera di bawah</p><div
+							class="grid grid-cols-1 divide-y divide-opacity-25 divide-dashed divide-quaternary"
+						>
+							{
+								banks.map((bank) => (
+									<div class="py-4">
+											<h4 class="font-bold text-base">Bank {bank.bankName}</h4>
+
+										<div class="relative text-2xl inline-flex gap-2 items-center px-2 py-1">
+											<>
+												<div class="absolute inset-0 text-sm bg-green-800 text-white flex items-center justify-center transition-all duration-200 z-10 opacity-0">
+													Berhasil disalin!
+												</div>
+												<span class="whitespace-pre-line relative z-10">{bank.accountNumber}</span>
+											</>
+											<button class="hover:opacity-75" title="Salin">
+												<iconify-icon icon="carbon:copy" width="18" height="18" />
+											</button>   
+										</div>
+										<>
+											<h5 class="mb-4">
+												a.n <span class="font-bold">{bank.accountName}</span>
+											</h5>
+										</>
+									</div>
+								))
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</>

@@ -1,0 +1,25 @@
+---
+export interface Props {
+	name: string
+	birthOrder: string
+	parents: string
+}
+const { name, birthOrder, parents } = Astro.props
+
+---
+
+<>
+	<div
+		data-aos-delay="300"
+		data-aos="fade-top"
+		class="w-full text-center relative flex flex-col justify-center aos-init aos-animate"
+	>
+		<p class="text-2xl font-bold mb-2 overflow-visible">
+			<span class="overflow-visible">{name}</span>
+		</p><p class="text-md font-bold mb-1 overflow-visible">
+			<span class="overflow-visible">{birthOrder}</span>
+		</p><p class="text-md font-light overflow-visible">
+			<span class="overflow-visible">{parents}</span>
+		</p>
+	</div>
+</>

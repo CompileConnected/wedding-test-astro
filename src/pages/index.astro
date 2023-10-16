@@ -3,117 +3,199 @@ import Layout from '../layouts/Layout.astro'
 import BottomItem from '../components/BottomItem.astro'
 import Title from '../components/Title.astro'
 import Gallery from '../components/Gallery.astro'
+import OpenInvitation from '../components/OpenInvitation.astro'
+import Profile from '../components/Profile.astro'
+import DateTimeAndLocation from '../components/DateTimeAndLocation.astro'
+import Gift from '../components/Gift.astro'
 import '../styles/main.css'
+import cover from '../../public/cover.avif'
+import groom from '../../public/groom.avif'
+import bride from '../../public/bride.avif'
+
+const banks = [
+	{
+		bankName: 'BCA',
+		accountNumber: '1234567890',
+		accountName: 'Yohanes'
+	},
+	{
+		bankName: 'Jago',
+		accountNumber: '1234567890',
+		accountName: 'Citra'
+	}
+]
 
 const images = [
 	{
-		id: "1",
+		id: '1',
 		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: "2",
+		id: '2',
 		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: "3",
+		id: '3',
 		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: "4",
+		id: '4',
 		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: "5",
+		id: '5',
 		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: "6",
+		id: '6',
 		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: "7",
+		id: '7',
 		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: "8",
+		id: '8',
 		url: 'https://via.placeholder.com/150x150'
 	},
 	{
-		id: "9",
+		id: '9',
 		url: 'https://via.placeholder.com/150x150'
 	}
 ]
 ---
 
 <Layout title="Landing">
-	<main class="mx-auto">
-		<div id="home" class="section flex flex-col flex-wrap justify-center items-center h-screen">
-			<div class="text-base sm:text-md font-bold p-0 text-center py-[2rem]">
-				Sabtu, 25 November 2023
+	<main>
+		<div class="h-screen bg-slate-900">
+			<div class="absolute inset-0">
+				<img
+					src={cover.src}
+					loading="lazy"
+					decoding="async"
+					class="w-full h-full object-cover mx-auto max-w-screen-md md:max-w-screen-sm transition-all grayscale-0 scale-100"
+				/>
 			</div>
-			<div class="satisfy text-center text-5xl sm:text-8xl font-bold">Yohanes & Citra</div>
-			<div class="text-base sm:text-md font-bold p-0 text-center">
-				<br />Dear Ayana <br /> We're Getting Married
+
+			<div class="relative flex flex-col flex-wrap justify-end h-screen text-white">
+				<div class="flex flex-col items-center content-center py-8">
+					<div class="satisfy text-center text-5xl font-bold">Yohanes & Citra</div>
+					<div class="text-center mx-8 p-3">
+						<p class="text-xs">Kepada :</p>
+						<h5 class="text-base font-bold overflow-visible">
+							{Astro.url.searchParams.get('to')}
+						</h5>
+					</div>
+					<OpenInvitation />
+				</div>
 			</div>
 		</div>
 
-		<div id="profile" class="section flex flex-col flex-wrap justify-center items-center h-screen">
-			<Title
-				title="Bride and Groom"
-				subTitle="With joy and His grace, we invite you to join us in the celebration of the wedding"
-			/>
+		<div id="profile" class="section">
+			<div id="home" class="flex flex-col flex-wrap justify-center items-center h-screen">
+				<div class="text-center mx-8">
+					Dan di atas semuanya itu: kenakanlah kasih, sebagai pengikat yang mempersatukan dan
+					menyempurnakan.
+				</div>
+				<div>Kolose 3:14</div>
+			</div>
+
+			<div class="min-h-full flex flex-col items-center h-wrap text-white bg-black p-11">
+				<Title title="Calon Pengantin" />
+				<div class="pb-11"></div>
+
+				<div class="w-[250px] h-[350px]">
+					<div class="relative shrink-0 w-full h-full">
+						<img
+							alt=""
+							loading="lazy"
+							decoding="async"
+							data-nimg="fill"
+							class="rounded-full"
+							sizes="100vw"
+							src={groom.src}
+							style="position: absolute; height: 100%; width: 100%; inset: 0px; object-fit: cover; color: transparent;"
+						/>
+					</div>
+				</div>
+
+				<Profile
+					name="Yohanes"
+					birthOrder="Anak Bungsu dari"
+					parents="Bapak Gabriel Bandyatno Kustiadi & Ibu Linda"
+				/>
+				<div class="pb-11"></div>
+				<div class="w-[250px] h-[350px]">
+					<div class="relative shrink-0 w-full h-full">
+						<img
+							alt=""
+							loading="lazy"
+							decoding="async"
+							data-nimg="fill"
+							class="rounded-full"
+							sizes="100vw"
+							src={bride.src}
+							style="position: absolute; height: 100%; width: 100%; inset: 0px; object-fit: cover; color: transparent;"
+						/>
+					</div>
+				</div>
+				<Profile name="Citra Yana Kristian" birthOrder="Anak pertama" parents="Bapak, Ibu" />
+			</div>
 		</div>
 
-		<div id="event" class="section flex flex-col flex-wrap justify-center items-center h-screen">
-			<Title
-				title="Event"
-				subTitle="With joy and His grace, we invite you to join us in the celebration of the wedding"
-			/>
+		<div id="event" class="section">
+			<div class="min-h-full flex flex-col items-center h-wrap text-black py-20 px-8">
+				<div data-aos="fade-in" class="relative z-10 aos-init aos-animate">
+					<div class="grid grid-cols-1 gap-10 text-center py-12">
+						<DateTimeAndLocation
+							title="Akad"
+							address="Sunburst BSD Lot II No. 7, Jl. Kapten Soebijanto Djojohadikusumo, BSD City, Lengkong Gudang, Tangerang, Jl. Boulevard BSD Tim., Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15321	"
+							date="25 November 2023"
+							time="13:00 WIB s/d Selesai"
+							locationUrl="https://maps.app.goo.gl/Kf47fUR42L9Y2o6N6"
+						/>
+						<div class="pb-11"></div>
+						<DateTimeAndLocation
+							title="Resepsi"
+							address="Sunburst BSD Lot II No. 7, Jl. Kapten Soebijanto Djojohadikusumo, BSD City, Lengkong Gudang, Tangerang, Jl. Boulevard BSD Tim., Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15321"
+							date="25 November 2023"
+							time="18:00 WIB s/d Selesai"
+							locationUrl="https://maps.app.goo.gl/Kf47fUR42L9Y2o6N6"
+						/>
+					</div>
+				</div>
+			</div>
 		</div>
-
-		<div
-			id="gallery"
-			class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap"
-		>
-			<Title title="Our Gallery" />
-			<Gallery images={images} />
-			
-			<div class="py-[3rem]"></div>
-			<Title title="Our Video" />
-
-			<iframe
-				client:visible
-				width="560"
-				height="315"
-				src="https://www.youtube-nocookie.com/embed/hF0I9h7C4A4?controls=0&start=8"
-				title="YouTube video player"
-				frameborder="0"
-				class="w-full sm:w-3/4 lg:w-1/2 aspect-auto"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				allowfullscreen></iframe>
-		</div>
-
-		<div id="story" class="section flex flex-col flex-wrap justify-center items-center h-screen">
-			<Title title="Our Story" subTitle="Time flies when you're in the moment of joy." />
-		</div>
-
-		<div id="wallet" class="section flex flex-col flex-wrap justify-center items-center h-screen">
-			<Title title="Present" />
-		</div>
-
-		<nav
-			class="fixed z-50 bottom-4 w-full max-w-lg -translate-x-1/2 left-1/2 bg-gray-800 text-white flex justify-around py-4"
-		>
-			<BottomItem title="Home" navigateTo="home" iconName="mdi:home" />
-			<BottomItem title="Profile" navigateTo="profile" iconName="mdi:account" />
-			<BottomItem title="Event" navigateTo="event" iconName="iconoir:calendar" />
-
-			<BottomItem title="Gallery" navigateTo="gallery" iconName="solar:gallery-linear" />
-			<BottomItem title="Story" navigateTo="story" iconName="ic:baseline-edit" />
-			<BottomItem title="Hadiah" navigateTo="wallet" iconName="basil:present-outline" />
-		</nav>
 	</main>
+
+	<div
+		id="gallery"
+		class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap"
+	>
+		<Title title="Our Gallery" />
+		<Gallery images={images} />
+	</div>
+
+	<div id="story" class="section flex flex-col flex-wrap justify-center items-center h-screen">
+		<Title title="Our Story" subTitle="Time flies when you're in the moment of joy." />
+	</div>
+
+	<div id="wallet" class="section flex flex-col flex-wrap justify-center items-center  h-wrap">
+		<Gift banks={banks} />
+	</div>
+
+	<nav
+		class="fixed z-50 bottom-4 w-full max-w-lg -translate-x-1/2 left-1/2 bg-gray-800 text-white flex justify-around py-4 invisible"
+	>
+		<BottomItem title="Pengantin" navigateTo="profile" iconName="mdi:account" />
+		<BottomItem title="Tanggal Acara" navigateTo="event" iconName="iconoir:calendar" />
+
+		<BottomItem title="Gallery" navigateTo="gallery" iconName="solar:gallery-linear" />
+		<BottomItem title="Story" navigateTo="story" iconName="ic:baseline-edit" />
+		<BottomItem title="Hadiah" navigateTo="wallet" iconName="basil:present-outline" />
+	</nav>
 </Layout>
+
 <script>
 	function smoothScrollTo(targetId: string) {
 		const target = document.getElementById(targetId)
@@ -204,6 +286,5 @@ const images = [
 	}
 
 	main {
-		background-image: var(--accent-gradient);
 	}
 </style>
