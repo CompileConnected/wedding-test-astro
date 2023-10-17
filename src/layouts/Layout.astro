@@ -3,6 +3,7 @@ import '../styles/main.css'
 import smc from '../../public/social-media-cover2.jpg'
 import '@fontsource/satisfy'
 import { ViewTransitions } from 'astro:transitions'
+import 'aos/dist/aos.css' // AOS styles
 ---
 
 <!DOCTYPE html>
@@ -42,9 +43,19 @@ import { ViewTransitions } from 'astro:transitions'
 		<ViewTransitions />
 	</head>
 	<body class="select-none">
-		<main id="main-content" class="bg-white rounded-lg shadow-lg mx-auto max-w-screen-md md:max-w-screen-sm">
+		<main
+			id="main-content"
+			class="bg-white rounded-lg shadow-lg mx-auto max-w-screen-md md:max-w-screen-sm"
+		>
 			<slot />
 		</main>
+
+		<script>
+			import { aosInit } from '../libs/js/aos'
+
+			// runs on initial page load
+			aosInit()
+		</script>
 		<style is:global>
 			.satisfy {
 				font-family: 'Satisfy', sans-serif;

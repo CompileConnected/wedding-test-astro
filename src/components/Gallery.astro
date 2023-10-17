@@ -1,16 +1,17 @@
 ---
-export interface Image {
-	id: string
-	url: string
-}
+import type { ImageMetadata } from 'astro'
 
 export interface Props {
-	images: Image[]
+	images: ImageMetadata[]
 }
 
 const { images } = Astro.props
 ---
 
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 content-around pt-[2rem]">
-	{images.map((image) => <img src={image.url} alt="Image" class="w-full h-full" />)}
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-2 content-around pt-[2rem] px-10">
+	{
+		images.map((image) => (
+			<img src={image.src} alt="Image" loading="lazy" decoding="async" class="w-full h-full" />
+		))
+	}
 </div>
