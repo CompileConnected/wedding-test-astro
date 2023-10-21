@@ -35,20 +35,31 @@ const { banks } = Astro.props
 							class="grid grid-cols-1 divide-y divide-opacity-25 divide-dashed divide-quaternary"
 						>
 							{
-								banks.map((bank) => (
+								banks.map((bank, index) => (
 									<div class="py-4">
-											<h4 class="font-bold text-base">Bank {bank.bankName}</h4>
+										<h4 class="font-bold text-base">Bank {bank.bankName}</h4>
 
 										<div class="relative text-2xl inline-flex gap-2 items-center px-2 py-1">
-											<>
-												<div class="absolute inset-0 text-sm bg-green-800 text-white flex items-center justify-center transition-all duration-200 z-10 opacity-0">
+											<copy-button>
+												<div
+													id={'state-success-bank-' + index + ''}
+													class="absolute inset-0 opacity-0"
+												>
 													Berhasil disalin!
 												</div>
-												<span class="whitespace-pre-line relative z-10">{bank.accountNumber}</span>
-											</>
-											<button class="hover:opacity-75" title="Salin">
-												<iconify-icon icon="carbon:copy" width="18" height="18" />
-											</button>   
+												<div
+													id={'state-fail-bank-' + index + ''}
+													class="absolute inset-0 opacity-0"
+												>
+													Gagal disalin!
+												</div>
+												<span id={'bank-' + index + ''} class="whitespace-pre-line relative px-2">
+													{bank.accountNumber}
+												</span>
+												<button class="hover:opacity-75 relative">
+													<iconify-icon icon="carbon:copy" width="18" height="18" />
+												</button>
+											</copy-button>
 										</div>
 										<>
 											<h5 class="mb-4">
@@ -65,3 +76,37 @@ const { banks } = Astro.props
 		</div>
 	</div>
 </>
+
+<script>
+	class CopyButton extends HTMLElement {
+		async doCopy(copyText: string, id: string) {
+			const showClassCss =
+				'absolute inset-0 opacity-100 z-10 text-sm text-white flex items-center justify-center transition-all duration-200'
+			const hideClassCss = 'absolute inset-0 opacity-0'
+			try {
+				await navigator.clipboard.writeText(copyText)
+				const successSlot = document.getElementById('state-success-' + id)
+				successSlot.className = showClassCss.concat(' bg-green-800')
+				setTimeout(() => {
+					successSlot.className = hideClassCss
+				}, 1000)
+			} catch (e) {
+				const failSlot = document.getElementById('state-fail-' + id)
+				failSlot.className = showClassCss.concat(' bg-red-800')
+				setTimeout(() => {
+					failSlot.className = hideClassCss
+				}, 1000)
+			}
+		}
+
+		constructor() {
+			super()
+			const button = this.querySelector('button')
+			const spanText = this.querySelector('span')
+
+			const text = spanText.innerHTML
+			button.addEventListener('click', async () => await this.doCopy(text, spanText.id))
+		}
+	}
+	customElements.define('copy-button', CopyButton)
+</script>
