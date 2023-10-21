@@ -10,8 +10,10 @@ import 'aos/dist/aos.css' // AOS styles
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
 		<meta name="generator" content={Astro.generator} />
 
 		<meta name="robots" content="noindex,nofollow" />
@@ -49,7 +51,12 @@ import 'aos/dist/aos.css' // AOS styles
 		>
 			<slot />
 		</main>
+		<script>
+			import { PhotoSwipeLightboxInit } from '../libs/js/photoswipe'
 
+			// runs on initial page load
+			PhotoSwipeLightboxInit()
+		</script>
 		<script>
 			import { aosInit } from '../libs/js/aos'
 

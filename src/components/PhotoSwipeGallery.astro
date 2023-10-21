@@ -1,0 +1,27 @@
+---
+import type { ImageMetadata } from 'astro'
+
+export interface Props {
+	images: ImageMetadata[]
+}
+
+const { images } = Astro.props
+---
+
+<div
+	class="grid grid-cols-2 sm:grid-cols-3 gap-2 content-around pt-[2rem] px-10 pswp-gallery"
+	id="pswp-gallery"
+>
+	{
+		images.map((image) => (
+			<a href={image.src}
+			
+				data-pswp-width="2000"
+				data-pswp-height="2999"
+				target="_blank"
+			>
+				<img src={image.src} alt="Image" loading="lazy" decoding="async" class="w-full h-full" />
+			</a>
+		))
+	}
+</div>

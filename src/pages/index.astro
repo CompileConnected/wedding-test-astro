@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 import BottomItem from '../components/BottomItem.astro'
 import Title from '../components/Title.astro'
-import Gallery from '../components/Gallery.astro'
+import PhotoSwipeGallery from '../components/PhotoSwipeGallery.astro'
 import OpenInvitation from '../components/OpenInvitation.astro'
 import Profile from '../components/Profile.astro'
 import DateTimeAndLocation from '../components/DateTimeAndLocation.astro'
@@ -11,12 +11,14 @@ import '../styles/main.css'
 import cover from '../../public/cover.avif'
 import groom from '../../public/groom.avif'
 import bride from '../../public/bride.avif'
-import g1 from '../../public/gallery/1.avif'
-import g2 from '../../public/gallery/2.avif'
-import g3 from '../../public/gallery/3.avif'
-import g4 from '../../public/gallery/4.avif'
-import g5 from '../../public/gallery/5.avif'
-
+import g1 from '../../public/gallery/115.avif'
+import g2 from '../../public/gallery/106.avif'
+import g3 from '../../public/gallery/138.avif'
+import g4 from '../../public/gallery/201.avif'
+import g5 from '../../public/gallery/210.avif'
+import g6 from '../../public/gallery/214.avif'
+import g7 from '../../public/gallery/218.avif'
+import g8 from '../../public/gallery/232.avif'
 
 const banks = [
 	{
@@ -32,7 +34,7 @@ const banks = [
 ]
 
 const images = [
-	g1, g2, g3, g4, g5
+	g1, g2, g3, g4, g5, g6, g7, g8
 ]
 ---
 
@@ -144,7 +146,7 @@ const images = [
 		class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap"
 	>
 		<Title title="Our Gallery" />
-		<Gallery images={images} />
+		<PhotoSwipeGallery images={images} />
 	</div>
 
 	<div id="story" class="section flex flex-col flex-wrap justify-center items-center h-screen">
