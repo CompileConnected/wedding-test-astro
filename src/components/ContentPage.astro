@@ -1,0 +1,140 @@
+---
+import Title from '../components/Title.astro'
+import PhotoSwipeGallery from '../components/PhotoSwipeGallery.astro'
+import Profile from '../components/Profile.astro'
+import DateTimeAndLocation from '../components/DateTimeAndLocation.astro'
+import Gift from '../components/Gift.astro'
+import MusicButton from './MusicButton.svelte'
+import groom from '../../public/groom.avif'
+import bride from '../../public/bride.avif'
+import g1 from '../../public/gallery/115.avif'
+import g2 from '../../public/gallery/106.avif'
+import g3 from '../../public/gallery/138.avif'
+import g4 from '../../public/gallery/201.avif'
+import g5 from '../../public/gallery/210.avif'
+import g6 from '../../public/gallery/214.avif'
+import g7 from '../../public/gallery/218.avif'
+import g8 from '../../public/gallery/232.avif'
+
+const banks = [
+	{
+		bankName: 'Jago',
+		accountNumber: '107713862011',
+		accountName: 'Yohanes'
+	},
+	{
+		bankName: 'Jago',
+		accountNumber: '107945552778',
+		accountName: 'Citra Yana Kristian'
+	}
+]
+
+const images = [g1, g2, g3, g4, g5, g6, g7, g8]
+---
+
+<>
+	<MusicButton client:load />
+	<div id="profile" class="section" data-aos-delay="500" data-aos="fade-in">
+		<div id="home" class="flex flex-col flex-wrap justify-center items-center h-screen">
+			<div class="text-center mx-8 aos-init aos-animate" data-aos="fade-in">
+				Dan di atas semuanya itu: kenakanlah kasih, sebagai pengikat yang mempersatukan dan
+				menyempurnakan.
+			</div>
+			<div data-aos="fade-in" class="aos-init aos-animate">Kolose 3:14</div>
+		</div>
+
+		<div class="min-h-full flex flex-col items-center h-wrap text-white bg-black p-11">
+			<Title title="Calon Pengantin" />
+			<div class="pb-11"></div>
+
+			<div class="w-[250px] h-[350px]">
+				<div class="relative shrink-0 w-full h-full">
+					<img
+						alt=""
+						loading="lazy"
+						decoding="async"
+						data-nimg="fill"
+						class="rounded-full"
+						sizes="100vw"
+						src={groom.src}
+						style="position: absolute; height: 100%; width: 100%; inset: 0px; object-fit: cover; color: transparent;"
+					/>
+				</div>
+			</div>
+
+			<Profile
+				name="Yohanes"
+				birthOrder="Anak Bungsu dari"
+				parents="Bapak Gabriel Bandyatno Kustiadi & Ibu Linda"
+			/>
+			<div class="pb-11"></div>
+			<div class="w-[250px] h-[350px]">
+				<div class="relative shrink-0 w-full h-full">
+					<img
+						alt=""
+						loading="lazy"
+						decoding="async"
+						data-nimg="fill"
+						class="rounded-full"
+						sizes="100vw"
+						src={bride.src}
+						style="position: absolute; height: 100%; width: 100%; inset: 0px; object-fit: cover; color: transparent;"
+					/>
+				</div>
+			</div>
+			<Profile name="Citra Yana Kristian" birthOrder="Anak pertama" parents="Bapak, Ibu" />
+		</div>
+	</div>
+
+	<div id="event" class="section">
+		<div class="min-h-full flex flex-col items-center h-wrap text-black py-20 px-8">
+			<div data-aos="fade-in" class="relative z-10 aos-init aos-animate">
+				<div class="grid grid-cols-1 gap-10 text-center py-12">
+					<DateTimeAndLocation
+						title="Akad"
+						address="Sunburst BSD Lot II No. 7, Jl. Kapten Soebijanto Djojohadikusumo, BSD City, Lengkong Gudang, Tangerang, Jl. Boulevard BSD Tim., Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15321	"
+						date="25 November 2023"
+						time="13:00 WIB s/d Selesai"
+						locationUrl="https://maps.app.goo.gl/Kf47fUR42L9Y2o6N6"
+					/>
+					<div class="pb-11"></div>
+					<DateTimeAndLocation
+						title="Resepsi"
+						address="Sunburst BSD Lot II No. 7, Jl. Kapten Soebijanto Djojohadikusumo, BSD City, Lengkong Gudang, Tangerang, Jl. Boulevard BSD Tim., Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15321"
+						date="25 November 2023"
+						time="18:00 WIB s/d Selesai"
+						locationUrl="https://maps.app.goo.gl/Kf47fUR42L9Y2o6N6"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div
+		id="gallery"
+		class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap"
+	>
+		<Title title="Our Gallery" />
+		<PhotoSwipeGallery images={images} />
+	</div>
+
+	<div id="wallet" class="section flex flex-col flex-wrap justify-center pt-20 pb-10 items-center h-wrap">
+		<Gift banks={banks} />
+	</div>
+
+	<div class="section min-h-full flex flex-col items-center h-wrap  text-white ">
+		<div class="grid grid-cols-1 gap-8 relative">
+			<img src={g7.src} alt="Image" class="w-full h-auto" loading="lazy" decoding="async" />
+			<div class="absolute top-0 left-0 pt-20 px-10">
+				<div class="aos-init aos-animate" data-aos="fade-down">
+					<div class="satisfy text-4xl font-bold">Terima kasih</div>
+					<div class="text-xs font-bold p-2">
+						Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i,
+						berkenan hadir dan memberikan do’a restu kepada kami.
+					</div>
+					<div class="satisfy text-3xl font-bold py-3">Citra & Yohanes</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</>

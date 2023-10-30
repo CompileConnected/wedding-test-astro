@@ -2,12 +2,19 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import lightningcss from 'vite-plugin-lightningcss';
 import vercel from '@astrojs/vercel/serverless';
-import vue from "@astrojs/vue";
+import svelte from '@astrojs/svelte';
+
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), vue()],
+  integrations: [tailwind(), svelte()],
   vite: {
+    ssr: {
+      external: ['svelte'],
+    },
+    optimizeDeps: {
+      include: ['svelte'],
+    },
     plugins: [
       lightningcss({
         browserslist: '>= 0.25%',

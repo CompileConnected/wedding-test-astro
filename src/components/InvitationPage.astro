@@ -1,0 +1,29 @@
+---
+import OpenInvitationButton from '../components/OpenInvitationButton.svelte'
+import cover from '../../public/cover.avif'
+---
+
+
+<div class="h-screen bg-slate-900" data-aos="fade-in">
+    <div class="absolute inset-0">
+        <img
+            src={cover.src}
+            loading="lazy"
+            decoding="async"
+            class="w-full h-full object-cover mx-auto max-w-screen-md md:max-w-screen-sm transition-all grayscale-0 scale-100"
+        />
+    </div>
+
+    <div class="relative flex flex-col flex-wrap justify-end h-screen text-white">
+        <div class="flex flex-col items-center content-center py-8">
+            <div class="satisfy text-center text-5xl font-bold">Yohanes & Citra</div>
+            <div class="text-center mx-8 p-3">
+                <p class="text-xs">Kepada :</p>
+                <h5 class="text-base font-bold overflow-visible">
+                    {Astro.url.searchParams.get('to')}
+                </h5>
+            </div>
+            <OpenInvitationButton client:load />
+        </div>
+    </div>
+</div>
