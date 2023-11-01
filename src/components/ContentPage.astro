@@ -15,6 +15,8 @@ import g5 from '../../public/gallery/210.avif'
 import g6 from '../../public/gallery/214.avif'
 import g7 from '../../public/gallery/218.avif'
 import g8 from '../../public/gallery/232.avif'
+import g9 from '../../public/gallery/136.avif'
+
 
 const banks = [
 	{
@@ -23,13 +25,35 @@ const banks = [
 		accountName: 'Yohanes'
 	},
 	{
-		bankName: 'Jago',
-		accountNumber: '107945552778',
+		bankName: 'Mandiri',
+		accountNumber: '60012163105',
 		accountName: 'Citra Yana Kristian'
 	}
 ]
 
 const images = [g1, g2, g3, g4, g5, g6, g7, g8]
+
+const profiles = [
+	{
+		name: 'Yohanes',
+		birthOrder: 'Son of',
+		img: groom.src,
+		parents: 'Gabriel Bandyatno Kustiadi & Linda'
+	}, 
+	{
+		name: 'Citra',
+		birthOrder: 'Daughter of',
+		img: bride.src,
+		parents: `Boyke Arnold L Tobing & Romentina Sipahutar`
+	}
+]
+
+const bibleQuotes = {
+	content: "And above all these things put on charity, which is the bond of perfectness.",
+	verse: "Colossians 3:14 (KJV)"
+}
+
+
 ---
 
 <>
@@ -37,52 +61,39 @@ const images = [g1, g2, g3, g4, g5, g6, g7, g8]
 	<div id="profile" class="section" data-aos-delay="500" data-aos="fade-in">
 		<div id="home" class="flex flex-col flex-wrap justify-center items-center h-screen">
 			<div class="text-center mx-8 aos-init aos-animate" data-aos="fade-in">
-				Dan di atas semuanya itu: kenakanlah kasih, sebagai pengikat yang mempersatukan dan
-				menyempurnakan.
+				{bibleQuotes.content}
 			</div>
-			<div data-aos="fade-in" class="aos-init aos-animate">Kolose 3:14</div>
+			<div data-aos="fade-in" class="aos-init aos-animate">
+				{bibleQuotes.verse}	
+			</div>
 		</div>
 
 		<div class="min-h-full flex flex-col items-center h-wrap text-white bg-black p-11">
-			<Title title="Calon Pengantin" />
-			<div class="pb-11"></div>
-
-			<div class="w-[250px] h-[350px]">
-				<div class="relative shrink-0 w-full h-full">
-					<img
-						alt=""
-						loading="lazy"
-						decoding="async"
-						data-nimg="fill"
-						class="rounded-full"
-						sizes="100vw"
-						src={groom.src}
-						style="position: absolute; height: 100%; width: 100%; inset: 0px; object-fit: cover; color: transparent;"
+			<Title title="Groom & Bride" />
+			{
+				profiles.map((profile) => (
+					<div class="pb-11"></div>
+					<div class="w-[250px] h-[350px]">
+						<div class="relative shrink-0 w-full h-full">
+							<img
+								alt=""
+								loading="lazy"
+								decoding="async"
+								data-nimg="fill"
+								class="rounded-full"
+								sizes="100vw"
+								src={profile.img}
+								style="position: absolute; height: 100%; width: 100%; inset: 0px; object-fit: cover; color: transparent;"
+							/>
+						</div>
+					</div>
+					<Profile
+						name={profile.name}
+						birthOrder={profile.birthOrder}
+						parents={profile.parents}
 					/>
-				</div>
-			</div>
-
-			<Profile
-				name="Yohanes"
-				birthOrder="Anak Bungsu dari"
-				parents="Bapak Gabriel Bandyatno Kustiadi & Ibu Linda"
-			/>
-			<div class="pb-11"></div>
-			<div class="w-[250px] h-[350px]">
-				<div class="relative shrink-0 w-full h-full">
-					<img
-						alt=""
-						loading="lazy"
-						decoding="async"
-						data-nimg="fill"
-						class="rounded-full"
-						sizes="100vw"
-						src={bride.src}
-						style="position: absolute; height: 100%; width: 100%; inset: 0px; object-fit: cover; color: transparent;"
-					/>
-				</div>
-			</div>
-			<Profile name="Citra Yana Kristian" birthOrder="Anak pertama" parents="Bapak, Ibu" />
+				))
+			}
 		</div>
 	</div>
 
@@ -91,18 +102,18 @@ const images = [g1, g2, g3, g4, g5, g6, g7, g8]
 			<div data-aos="fade-in" class="relative z-10 aos-init aos-animate">
 				<div class="grid grid-cols-1 gap-10 text-center py-12">
 					<DateTimeAndLocation
-						title="Akad"
-						address="Sunburst BSD Lot II No. 7, Jl. Kapten Soebijanto Djojohadikusumo, BSD City, Lengkong Gudang, Tangerang, Jl. Boulevard BSD Tim., Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15321	"
+						title="Blessing"
+						address="GBI GLOW Fellowship Center BSD Junction, Lengkong Wetan, Serpong Sub-District, South Tangerang City, Banten 15310"
 						date="25 November 2023"
-						time="13:00 WIB s/d Selesai"
-						locationUrl="https://maps.app.goo.gl/Kf47fUR42L9Y2o6N6"
+						time="13:00 WIB till finish"
+						locationUrl="https://maps.app.goo.gl/aG2qtFebrnGudcgN8"
 					/>
 					<div class="pb-11"></div>
 					<DateTimeAndLocation
-						title="Resepsi"
+						title="Reception"
 						address="Sunburst BSD Lot II No. 7, Jl. Kapten Soebijanto Djojohadikusumo, BSD City, Lengkong Gudang, Tangerang, Jl. Boulevard BSD Tim., Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15321"
 						date="25 November 2023"
-						time="18:00 WIB s/d Selesai"
+						time="17:00 WIB till finish"
 						locationUrl="https://maps.app.goo.gl/Kf47fUR42L9Y2o6N6"
 					/>
 				</div>
@@ -114,7 +125,7 @@ const images = [g1, g2, g3, g4, g5, g6, g7, g8]
 		id="gallery"
 		class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap"
 	>
-		<Title title="Our Gallery" />
+		<Title title="Our Moments" />
 		<PhotoSwipeGallery images={images} />
 	</div>
 
@@ -122,15 +133,16 @@ const images = [g1, g2, g3, g4, g5, g6, g7, g8]
 		<Gift banks={banks} />
 	</div>
 
-	<div class="section min-h-full flex flex-col items-center h-wrap  text-white ">
-		<div class="grid grid-cols-1 gap-8 relative">
-			<img src={g7.src} alt="Image" class="w-full h-auto" loading="lazy" decoding="async" />
-			<div class="absolute top-0 left-0 pt-20 px-10">
+	<div class="section min-h-full flex flex-col items-center h-wrap text-center text-white ">
+		<div class="grid grid-cols-1 gap-8 relative bg-gradient-to-b from-gray-100 to-gray-500">
+			<img src={g9.src} alt="Image" class="w-full h-auto" loading="lazy" decoding="async" />
+			
+			
+			<div class="absolute top-0 px-10 pt-20"> 
 				<div class="aos-init aos-animate" data-aos="fade-down">
-					<div class="satisfy text-4xl font-bold">Terima kasih</div>
+					<div class="satisfy text-4xl font-bold">Thank you</div>
 					<div class="text-xs font-bold p-2">
-						Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i,
-						berkenan hadir dan memberikan do’a restu kepada kami.
+						It would be a joy and an honor for us if you, would kindly attend and bestow your blessings upon us.
 					</div>
 					<div class="satisfy text-3xl font-bold py-3">Citra & Yohanes</div>
 				</div>

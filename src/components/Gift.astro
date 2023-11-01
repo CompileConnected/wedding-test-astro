@@ -23,15 +23,13 @@ const { banks } = Astro.props
 			</div>
 			<div class="mb-4">
 				<p class="text-base text-center overflow-visible">
-					<span class="overflow-visible"
-						>Hadiah dari Anda akan menambah kebahagian di hari pernikahan Kami.</span
-					>
+					<span class="overflow-visible">Your gift will add to the joy on our wedding day.</span>
 				</p>
 			</div>
 			<div class="relative">
 				<div>
 					<div class="text-center pt-2">
-						<p class="mb-4 text-sm">Transfer langsung ke rekening yang tertera di bawah</p><div
+						<div
 							class="grid grid-cols-1 divide-y divide-opacity-25 divide-dashed divide-quaternary"
 						>
 							{
@@ -45,13 +43,13 @@ const { banks } = Astro.props
 													id={'state-success-bank-' + index + ''}
 													class="absolute inset-0 opacity-0"
 												>
-													Berhasil disalin!
+													Copied!
 												</div>
 												<div
 													id={'state-fail-bank-' + index + ''}
 													class="absolute inset-0 opacity-0"
 												>
-													Gagal disalin!
+													Fail to copy!
 												</div>
 												<span id={'bank-' + index + ''} class="whitespace-pre-line relative px-2">
 													{bank.accountNumber}
@@ -63,7 +61,7 @@ const { banks } = Astro.props
 										</div>
 										<>
 											<h5 class="mb-4">
-												a.n <span class="font-bold">{bank.accountName}</span>
+												<span class="font-bold">{bank.accountName}</span>
 											</h5>
 										</>
 									</div>
