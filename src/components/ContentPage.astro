@@ -16,6 +16,7 @@ import g6 from '../../public/gallery/214.avif'
 import g7 from '../../public/gallery/218.avif'
 import g8 from '../../public/gallery/232.avif'
 import g9 from '../../public/gallery/136.avif'
+import InstagramButton from './InstagramButton.svelte'
 
 
 const banks = [
@@ -51,6 +52,10 @@ const profiles = [
 const bibleQuotes = {
 	content: "And above all these things put on charity, which is the bond of perfectness.",
 	verse: "Colossians 3:14 (KJV)"
+}
+function toInstagram() {
+	console.log("hardcode")
+	window.open('https://www.instagram.com/ar/347137501335742/', '_blank');
 }
 
 
@@ -133,20 +138,37 @@ const bibleQuotes = {
 		<Gift banks={banks} />
 	</div>
 
+	<div class="section flex flex-col flex-wrap justify-center pb-10 items-center content-center h-wrap">
+		<div class="p-10 mb-20 flex flex-col items-center content-center rounded-lg shadow-xl ">
+			<div data-aos="fade-in" class="relative z-10 aos-init aos-animate">
+				<h2 class="text-center satisfy text-4xl font-bold  mb-8 overflow-visible aos-init aos-animate"
+						data-aos="zoom-out">
+						<span class="overflow-visible">Instagram Filter</span>
+					</h2>
+				<p class="text-base text-center overflow-visible mb-4">
+					<span class="overflow-visible">Share Your Moments with Instagram Filter.</span>
+				</p>
+			</div>
+			<InstagramButton client:load />
+		</div>
+	</div>
+
+
 	<div class="section min-h-full flex flex-col items-center h-wrap text-center text-white ">
-		<div class="grid grid-cols-1 gap-8 relative bg-gradient-to-b from-gray-100 to-gray-500">
-			<img src={g9.src} alt="Image" class="w-full h-auto" loading="lazy" decoding="async" />
-			
-			
-			<div class="absolute top-0 px-10 pt-20"> 
+		<div class="grid grid-cols-1 relative bg-gradient-to-b from-gray-100 to-gray-500">
+			<div class="bg-black "> 
 				<div class="aos-init aos-animate" data-aos="fade-down">
-					<div class="satisfy text-4xl font-bold">Thank you</div>
+					<div class="satisfy text-4xl font-bold pt-10">Thank you</div>
 					<div class="text-xs font-bold p-2">
 						It would be a joy and an honor for us if you, would kindly attend and bestow your blessings upon us.
 					</div>
-					<div class="satisfy text-3xl font-bold py-3">Citra & Yohanes</div>
+					<div class="satisfy text-3xl font-bold">Citra & Yohanes</div>
 				</div>
 			</div>
+			<img src={g9.src} alt="Image" class="w-full h-auto" loading="lazy" decoding="async" />
+			
+			
+			
 		</div>
 	</div>
 </>

@@ -26,51 +26,45 @@ const { banks } = Astro.props
 					<span class="overflow-visible">Your gift will add to the joy on our wedding day.</span>
 				</p>
 			</div>
-			<div class="relative">
-				<div>
-					<div class="text-center pt-2">
-						<div
-							class="grid grid-cols-1 divide-y divide-opacity-25 divide-dashed divide-quaternary"
-						>
-							{
-								banks.map((bank, index) => (
-									<div class="py-4">
-										<h4 class="font-bold text-base">Bank {bank.bankName}</h4>
+			<div
+			class=" relative text-center pt-2 grid grid-cols-1 divide-y divide-opacity-25 divide-dashed divide-quaternary"
+		>
+			{
+				banks.map((bank, index) => (
+					<div class="py-4">
+						<h4 class="font-bold text-base">Bank {bank.bankName}</h4>
 
-										<div class="relative text-2xl inline-flex gap-2 items-center px-2 py-1">
-											<copy-button>
-												<div
-													id={'state-success-bank-' + index + ''}
-													class="absolute inset-0 opacity-0"
-												>
-													Copied!
-												</div>
-												<div
-													id={'state-fail-bank-' + index + ''}
-													class="absolute inset-0 opacity-0"
-												>
-													Fail to copy!
-												</div>
-												<span id={'bank-' + index + ''} class="whitespace-pre-line relative px-2">
-													{bank.accountNumber}
-												</span>
-												<button class="hover:opacity-75 relative">
-													<iconify-icon icon="carbon:copy" width="18" height="18" />
-												</button>
-											</copy-button>
-										</div>
-										<>
-											<h5 class="mb-4">
-												<span class="font-bold">{bank.accountName}</span>
-											</h5>
-										</>
-									</div>
-								))
-							}
+						<div class="relative text-2xl inline-flex gap-2 items-center px-2 py-1">
+							<copy-button>
+								<div
+									id={'state-success-bank-' + index + ''}
+									class="absolute inset-0 opacity-0"
+								>
+									Copied!
+								</div>
+								<div
+									id={'state-fail-bank-' + index + ''}
+									class="absolute inset-0 opacity-0"
+								>
+									Fail to copy!
+								</div>
+								<span id={'bank-' + index + ''} class="whitespace-pre-line relative px-2">
+									{bank.accountNumber}
+								</span>
+								<button class="hover:opacity-75 relative">
+									<iconify-icon icon="carbon:copy" width="18" height="18" />
+								</button>
+							</copy-button>
 						</div>
+						<>
+							<h5 class="mb-4">
+								<span class="font-bold">{bank.accountName}</span>
+							</h5>
+						</>
 					</div>
-				</div>
-			</div>
+				))
+			}
+		</div>
 		</div>
 	</div>
 </>
