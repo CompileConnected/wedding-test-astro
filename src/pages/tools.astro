@@ -42,22 +42,33 @@ Yohanes & Citra
   <main>
     <div class="flex flex-col px-4 py-6 bg-white rounded-lg shadow">
 
+        <div class="mt-4 text-gray-700 text-lg whitespace-pre-wrap">
+            Kepada: 
+          </div>
         <textarea 
           id="inputText"
           class="w-full border border-gray-300 rounded px-3 py-2 text-gray-900 focus:outline-none focus:border-indigo-500"
-          placeholder="Enter some text..."
+          placeholder="Masukkan Nama yang mau diundang ...."
         ></textarea>
       
+
         <button 
             class="mt-2 px-4 py-2 text-white bg-indigo-500 rounded hover:bg-indigo-600"
         >
         Copy
         </button>
+
+        <div class="mt-4 text-gray-700 text-lg whitespace-pre-wrap">
+            Preview Text Yang akan di copy: 
+          </div>
         <div id="preview" class="mt-4 text-gray-700 whitespace-pre-wrap">
           {text}
         </div>
-      
+        <div id="snackbar" class="fixed bottom-0 left-0 m-4 w-full max-w-md p-4 bg-green-500 text-white rounded shadow hidden">
+            <p id="snackbar-message">Message sent!</p>
+          </div>
       </div>
+   
   </main>
 </html>
 
@@ -70,9 +81,19 @@ Yohanes & Citra
 
     copyButton.addEventListener('click', () => {
 
-    // Get text from preview
+        // Get text from preview
+        const input = document.getElementById('inputText');
         const text = document.getElementById('preview').innerText;
+        const snackbar = document.getElementById('snackbar');
+        const snackbarMessage = document.getElementById('snackbar-message');
+        
+        snackbarMessage.innerHTML = `Undangan di copy untuk: ${input.value}`;
 
+        snackbar.classList.remove('hidden');
+
+        setTimeout(() => {
+            snackbar.classList.add('hidden');
+        }, 3000); 
         // Copy to clipboard
         navigator.clipboard.writeText(text);
 
