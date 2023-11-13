@@ -1,0 +1,116 @@
+---
+import '../styles/main.css'
+const text = `
+
+Kepada Yth.  yang dikasihi Tuhan,
+
+Damai sejahtera dalam nama Tuhan Yesus Kristus.
+
+Dengan sukacita kami mengundang anda untuk hadir dalam acara pernikahan kami:
+
+
+
+Hari/Tanggal: Sabtu, 25 November 2023
+
+Pukul: 17.00 WIB
+
+Tempat: Lembur Kuring
+    
+Sunburst BSD Lot II No. 7, Jl. Kapten Soebijanto Djojohadikusumo, BSD City, Lengkong Gudang, Tangerang, Jl. Boulevard BSD Tim., Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15321
+
+Kami sangat bersyukur atas karunia Tuhan yang telah mempertemukan dan mengikatkan hati kami dalam ikatan pernikahan. 
+Kehadiran anda akan melengkapi sukacita kami.
+
+Kiranya pernikahan kami dapat memuliakan nama Tuhan dan menjadi berkat bagi semua.
+Mohon doa restu anda bagi pernikahan kami ini.
+
+Dalam kasih Kristus,
+
+Yohanes & Citra
+
+`
+---
+
+
+
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="referrer" content="no-referrer" />
+		<meta name="view-transition" content="same-origin" />
+    </head>
+  <main>
+    <div class="flex flex-col px-4 py-6 bg-white rounded-lg shadow">
+
+        <textarea 
+          id="inputText"
+          class="w-full border border-gray-300 rounded px-3 py-2 text-gray-900 focus:outline-none focus:border-indigo-500"
+          placeholder="Enter some text..."
+        ></textarea>
+      
+        <button 
+            class="mt-2 px-4 py-2 text-white bg-indigo-500 rounded hover:bg-indigo-600"
+        >
+        Copy
+        </button>
+        <div id="preview" class="mt-4 text-gray-700 whitespace-pre-wrap">
+          {text}
+        </div>
+      
+      </div>
+  </main>
+</html>
+
+
+<script>
+    const input = document.getElementById('inputText');
+    const preview = document.getElementById('preview');
+
+    const copyButton = document.querySelector('button'); 
+
+    copyButton.addEventListener('click', () => {
+
+    // Get text from preview
+        const text = document.getElementById('preview').innerText;
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(text);
+
+    });
+
+    
+    function makeText(name) {
+        const url = encodeURI(`https://yohanes-citra.vercel.app/?to=${name}`);
+        const text = `Kepada Yth. ${name} yang dikasihi Tuhan,
+
+Damai sejahtera dalam nama Tuhan Yesus Kristus.
+
+Dengan sukacita kami mengundang anda untuk hadir dalam acara pernikahan kami:
+
+${url}
+
+Hari/Tanggal: Sabtu, 25 November 2023
+
+Pukul: 17.00 WIB
+
+Tempat: Lembur Kuring
+    
+Sunburst BSD Lot II No. 7, Jl. Kapten Soebijanto Djojohadikusumo, BSD City, Lengkong Gudang, Tangerang, Jl. Boulevard BSD Tim., Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15321
+
+Kami sangat bersyukur atas karunia Tuhan yang telah mempertemukan dan mengikatkan hati kami dalam ikatan pernikahan. 
+Kehadiran anda akan melengkapi sukacita kami.
+
+Kiranya pernikahan kami dapat memuliakan nama Tuhan dan menjadi berkat bagi semua.
+Mohon doa restu anda bagi pernikahan kami ini.
+
+Dalam kasih Kristus,
+
+Yohanes & Citra`
+        return text
+    }
+
+    
+    input.addEventListener('input', () => {
+      preview.innerHTML = makeText(input.value);
+    });
+</script>

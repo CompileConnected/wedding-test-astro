@@ -1,12 +1,13 @@
 ---
 export interface Props {
 	title: string
+	placeName: string
 	address: string
 	date: string
 	time: string
 	locationUrl: string
 }
-const { title, address, date, time, locationUrl } = Astro.props
+const { title, placeName, address, date, time, locationUrl } = Astro.props
 ---
 
 <>
@@ -22,6 +23,9 @@ const { title, address, date, time, locationUrl } = Astro.props
 			</p>
 			<div class="h-[2px] w-full opacity-30 bg-gray-800"></div>
 		</div>
+		<p class="mb-1 aos-init aos-animate font-bold text-lg" data-aos="fade-up" data-aos-delay="100">
+			{placeName}
+		</p>
 		<p class="mb-1 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
 			<iconify-icon icon="mdi:calendar-blank" width="18" height="18"></iconify-icon>
 			{date}
