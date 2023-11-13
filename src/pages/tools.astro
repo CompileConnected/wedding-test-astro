@@ -31,78 +31,93 @@ Yohanes & Citra
 `
 ---
 
-
-
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="referrer" content="no-referrer" />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="referrer" content="no-referrer" />
 		<meta name="view-transition" content="same-origin" />
-    </head>
-  <main>
-    <div class="flex flex-col px-4 py-6 bg-white rounded-lg shadow">
+		<style>
+			.step {
+				@apply mb-4;
+			}
 
-        <div class="mt-4 text-gray-700 text-lg whitespace-pre-wrap">
-            Kepada: 
-          </div>
-        <textarea 
-          id="inputText"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-gray-900 focus:outline-none focus:border-indigo-500"
-          placeholder="Masukkan Nama yang mau diundang ...."
-        ></textarea>
-      
+			.step-number {
+				@apply text-2xl font-bold text-blue-500;
+			}
+		</style>
+	</head>
+	<main>
+		<div class="flex flex-col px-4 py-6 bg-white rounded-lg shadow">
+			<div class="bg-white shadow-lg p-4">
+				<h2 class="text-lg font-bold mb-4">Guide Isi template undangan</h2>
 
-        <button 
-            class="mt-2 px-4 py-2 text-white bg-indigo-500 rounded hover:bg-indigo-600"
-        >
-        Copy
-        </button>
+				<div class="step flex">
+					<div class="step-number">1</div>
+                    <p class="ms-4">Masukin nama ke kolom input</p>
+				</div>
 
-        <div class="mt-4 text-gray-700 text-lg whitespace-pre-wrap">
-            Preview Text Yang akan di copy: 
-          </div>
-        <div id="preview" class="mt-4 text-gray-700 whitespace-pre-wrap">
-          {text}
-        </div>
-        <div id="snackbar" class="fixed bottom-0 left-0 m-4 w-full max-w-md p-4 bg-green-500 text-white rounded shadow hidden">
-            <p id="snackbar-message">Message sent!</p>
-          </div>
-      </div>
-   
-  </main>
-</html>
+				<div class="step flex">
+					<div class="step-number">2</div>
+                    <p class="ms-4">Pencet Copy</p>
+				</div>
+			</div>
+
+			<div class="mt-4 text-gray-700 text-lg whitespace-pre-wrap">Nama:</div>
+			<textarea
+				id="inputText"
+				class="w-full border border-gray-300 rounded px-3 py-2 text-gray-900 focus:outline-none focus:border-indigo-500"
+				placeholder="Masukkan Nama yang mau diundang ...."></textarea>
+
+			<button class="mt-2 px-4 py-2 text-white bg-indigo-500 rounded hover:bg-indigo-600">
+				Copy
+			</button>
+
+			<div class="mt-4 text-gray-700 text-lg whitespace-pre-wrap">
+				Preview text yang akan di copy:
+			</div>
+			<div
+				id="preview"
+				class="ps-4 pe-4 text-blue-500 bg-gray-100 transition hover:bg-indigo-100 shadow-lg border border-gray-200 rounded whitespace-pre-wrap"
+			>
+				{text}
+			</div>
+			<div
+				id="snackbar"
+				class="fixed bottom-0 left-0 m-4 w-full max-w-md p-4 bg-green-500 text-white rounded shadow hidden"
+			>
+				<p id="snackbar-message">Message sent!</p>
+			</div>
+		</div>
+	</main>
 
 
-<script>
-    const input = document.getElementById('inputText');
-    const preview = document.getElementById('preview');
+	<script>
+		const input = document.getElementById('inputText')
+		const preview = document.getElementById('preview')
 
-    const copyButton = document.querySelector('button'); 
+		const copyButton = document.querySelector('button')
 
-    copyButton.addEventListener('click', () => {
+		copyButton.addEventListener('click', () => {
+			// Get text from preview
+			const input = document.getElementById('inputText')
+			const text = document.getElementById('preview').innerText
+			const snackbar = document.getElementById('snackbar')
+			const snackbarMessage = document.getElementById('snackbar-message')
 
-        // Get text from preview
-        const input = document.getElementById('inputText');
-        const text = document.getElementById('preview').innerText;
-        const snackbar = document.getElementById('snackbar');
-        const snackbarMessage = document.getElementById('snackbar-message');
-        
-        snackbarMessage.innerHTML = `Undangan di copy untuk: ${input.value}`;
+			snackbarMessage.innerHTML = `Undangan di copy untuk: ${input.value}`
 
-        snackbar.classList.remove('hidden');
+			snackbar.classList.remove('hidden')
 
-        setTimeout(() => {
-            snackbar.classList.add('hidden');
-        }, 3000); 
-        // Copy to clipboard
-        navigator.clipboard.writeText(text);
+			setTimeout(() => {
+				snackbar.classList.add('hidden')
+			}, 3000)
+			// Copy to clipboard
+			navigator.clipboard.writeText(text)
+		})
 
-    });
-
-    
-    function makeText(name) {
-        const url = encodeURI(`https://yohanes-citra.vercel.app/?to=${name}`);
-        const text = `Kepada Yth. ${name} yang dikasihi Tuhan,
+		function makeText(name) {
+			const url = encodeURI(`https://yohanes-citra.vercel.app/?to=${name}`)
+			const text = `Kepada Yth. ${name} yang dikasihi Tuhan,
 
 Damai sejahtera dalam nama Tuhan Yesus Kristus.
 
@@ -127,11 +142,12 @@ Mohon doa restu anda bagi pernikahan kami ini.
 Dalam kasih Kristus,
 
 Yohanes & Citra`
-        return text
-    }
+			return text
+		}
 
-    
-    input.addEventListener('input', () => {
-      preview.innerHTML = makeText(input.value);
-    });
-</script>
+		input.addEventListener('input', () => {
+			preview.innerHTML = makeText(input.value)
+		})
+	</script>
+
+</html>
