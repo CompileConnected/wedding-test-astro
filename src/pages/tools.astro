@@ -1,12 +1,10 @@
 ---
 import '../styles/main.css'
-const text = `
+const text = `Hi 
 
-Kepada Yth.  yang dikasihi Tuhan,
+Semoga selalu dalam keadaan yang baik.
 
-Damai sejahtera dalam nama Tuhan Yesus Kristus.
-
-Dengan sukacita kami mengundang anda untuk hadir dalam acara pernikahan kami:
+Dengan sukacita kami bermaksud mengundang untuk hadir dalam acara pernikahan kami:
 
 
 
@@ -14,21 +12,13 @@ Hari/Tanggal: Sabtu, 25 November 2023
 
 Pukul: 17.00 WIB
 
-Tempat: Lembur Kuring
-    
+Tempat: Lembur Kuring Restaurant
 Sunburst BSD Lot II No. 7, Jl. Kapten Soebijanto Djojohadikusumo, BSD City, Lengkong Gudang, Tangerang, Jl. Boulevard BSD Tim., Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15321
 
-Kami sangat bersyukur atas karunia Tuhan yang telah mempertemukan dan mengikatkan hati kami dalam ikatan pernikahan. 
-Kehadiran anda akan melengkapi sukacita kami.
+Jika ada kesempatan kiranya bisa dapat hadir untuk melengkapi sukacita kami.
 
-Kiranya pernikahan kami dapat memuliakan nama Tuhan dan menjadi berkat bagi semua.
-Mohon doa restu anda bagi pernikahan kami ini.
-
-Dalam kasih Kristus,
-
-Yohanes & Citra
-
-`
+Mohon doa restunya 😊
+Dari : Yohanes & Citra`
 ---
 
 <html>
@@ -77,7 +67,7 @@ Yohanes & Citra
 			</div>
 			<div
 				id="preview"
-				class="ps-4 pe-4 text-blue-500 bg-gray-100 transition hover:bg-indigo-100 shadow-lg border border-gray-200 rounded whitespace-pre-wrap"
+				class="p-4 text-blue-500 bg-gray-100 transition hover:bg-indigo-100 shadow-lg border border-gray-200 rounded whitespace-pre-wrap"
 			>
 				{text}
 			</div>
@@ -117,11 +107,11 @@ Yohanes & Citra
 
 		function makeText(name) {
 			const url = encodeURI(`https://yohanes-citra.vercel.app/?to=${name}`)
-			const text = `Kepada Yth. ${name} yang dikasihi Tuhan,
+			const text = `Hi ${name}
 
-Damai sejahtera dalam nama Tuhan Yesus Kristus.
+Semoga selalu dalam keadaan yang baik.
 
-Dengan sukacita kami mengundang anda untuk hadir dalam acara pernikahan kami:
+Dengan sukacita kami bermaksud mengundang untuk hadir dalam acara pernikahan kami:
 
 ${url}
 
@@ -129,19 +119,14 @@ Hari/Tanggal: Sabtu, 25 November 2023
 
 Pukul: 17.00 WIB
 
-Tempat: Lembur Kuring
-    
+Tempat: Lembur Kuring Restaurant
 Sunburst BSD Lot II No. 7, Jl. Kapten Soebijanto Djojohadikusumo, BSD City, Lengkong Gudang, Tangerang, Jl. Boulevard BSD Tim., Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15321
 
-Kami sangat bersyukur atas karunia Tuhan yang telah mempertemukan dan mengikatkan hati kami dalam ikatan pernikahan. 
-Kehadiran anda akan melengkapi sukacita kami.
+Jika ada kesempatan kiranya bisa dapat hadir untuk melengkapi sukacita kami.
 
-Kiranya pernikahan kami dapat memuliakan nama Tuhan dan menjadi berkat bagi semua.
-Mohon doa restu anda bagi pernikahan kami ini.
+Mohon doa restunya 😊
+Dari : Yohanes & Citra`
 
-Dalam kasih Kristus,
-
-Yohanes & Citra`
 			return text
 		}
 
