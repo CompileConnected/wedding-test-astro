@@ -2,8 +2,6 @@
 import Layout from '../layouts/Layout.astro'
 import InvitationPage from '../components/InvitationPage.astro'
 import ContentPage from '../components/ContentPage.astro'
-import '../styles/main.css'
-
 ---
 
 <Layout>
@@ -20,10 +18,10 @@ import '../styles/main.css'
 
 <script>
     import { isInvitationOpen } from '../store/store'
+    import { animateInvitationOpen } from '../libs/js/animations'
     isInvitationOpen.subscribe((isOpen) => {
         if (isOpen) {
-            document.getElementById('invitation').remove()
-			document.getElementById('content').classList.remove('hidden')
+            animateInvitationOpen()
         }
     })
 </script>

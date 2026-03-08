@@ -5,17 +5,17 @@ import Profile from '../components/Profile.astro'
 import DateTimeAndLocation from '../components/DateTimeAndLocation.astro'
 import Gift from '../components/Gift.astro'
 import MusicButton from './MusicButton.svelte'
-import groom from '../../public/groom.avif'
-import bride from '../../public/bride.avif'
-import g1 from '../../public/gallery/115.avif'
-import g2 from '../../public/gallery/106.avif'
-import g3 from '../../public/gallery/138.avif'
-import g4 from '../../public/gallery/201.avif'
-import g5 from '../../public/gallery/210.avif'
-import g6 from '../../public/gallery/214.avif'
-import g7 from '../../public/gallery/218.avif'
-import g8 from '../../public/gallery/232.avif'
-import g9 from '../../public/gallery/136.avif'
+import groom from '../assets/groom.avif'
+import bride from '../assets/bride.avif'
+import g1 from '../assets/gallery/115.avif'
+import g2 from '../assets/gallery/106.avif'
+import g3 from '../assets/gallery/138.avif'
+import g4 from '../assets/gallery/201.avif'
+import g5 from '../assets/gallery/210.avif'
+import g6 from '../assets/gallery/214.avif'
+import g7 from '../assets/gallery/218.avif'
+import g8 from '../assets/gallery/232.avif'
+import g9 from '../assets/gallery/136.avif'
 import InstagramButton from './InstagramButton.svelte'
 
 
@@ -53,58 +53,77 @@ const bibleQuotes = {
 	content: "And above all these things put on charity, which is the bond of perfectness.",
 	verse: "Colossians 3:14 (KJV)"
 }
-function toInstagram() {
-	console.log("hardcode")
-	window.open('https://www.instagram.com/ar/347137501335742/', '_blank');
-}
 
 
 ---
 
 <>
 	<MusicButton client:load />
-	<div id="profile" class="section" data-aos-delay="500" data-aos="fade-in">
-		<div id="home" class="flex flex-col flex-wrap justify-center items-center h-screen">
-			<div class="text-center mx-8 aos-init aos-animate" data-aos="fade-in">
-				{bibleQuotes.content}
-			</div>
-			<div data-aos="fade-in" class="aos-init aos-animate">
-				{bibleQuotes.verse}	
+	<div id="profile" class="section" data-animate="fade-in" data-animate-delay="300">
+		<div id="home" class="relative flex flex-col justify-center items-center h-screen px-8 overflow-hidden" style="background: linear-gradient(160deg, #0a0a0f 0%, #12121e 40%, #0a0a0f 100%);">
+
+			<!-- Quote content -->
+			<div class="relative z-10 max-w-sm text-center" data-animate="fade-up" data-animate-delay="400">
+
+				<!-- Quote text -->
+				<p class="text-lg leading-9 italic px-4" style="font-family: 'Georgia', serif; color: #f5e6d3; letter-spacing: 0.02em; text-shadow: 0 1px 8px rgba(0,0,0,0.4);">
+					{bibleQuotes.content}
+				</p>
+
+				<!-- Ornamental separator -->
+				<div class="flex items-center justify-center mt-8 mb-5" data-animate="zoom-in" data-animate-delay="600">
+					<div class="h-px w-10 animate-line" style="background: #c8956c;"></div>
+					<div class="mx-2 w-1.5 h-1.5 rotate-45 pulse-diamond" style="background: #c8956c;"></div>
+					<div class="h-px w-4 animate-line" style="background: #c8956c;"></div>
+					<div class="mx-2 w-2.5 h-2.5 rotate-45 pulse-diamond" style="background: #c8956c;"></div>
+					<div class="h-px w-4 animate-line" style="background: #c8956c;"></div>
+					<div class="mx-2 w-1.5 h-1.5 rotate-45 pulse-diamond" style="background: #c8956c;"></div>
+					<div class="h-px w-10 animate-line" style="background: #c8956c;"></div>
+				</div>
+
+				<!-- Verse reference -->
+				<p class="satisfy text-2xl tracking-widest" style="color: #e8c99a; text-shadow: 0 0 20px rgba(232,201,154,0.4);">{bibleQuotes.verse}</p>
 			</div>
 		</div>
 
-		<div class="min-h-full flex flex-col items-center h-wrap text-white bg-black p-11">
-			<Title title="Groom & Bride" />
+		<!-- Groom & Bride -->
+		<div class="min-h-full flex flex-col items-center h-wrap py-16 px-8" style="background: linear-gradient(180deg, #0a0a0f 0%, #111118 50%, #0a0a0f 100%);">
+			<div data-animate="fade-down" data-animate-delay="200" class="mb-4">
+				<p class="text-sm uppercase tracking-[0.3em] text-center mb-3" style="color: rgba(200,149,108,0.5);">The Wedding of</p>
+				<h2 class="satisfy text-4xl font-bold text-center" style="color: #f5e6d3;">Groom & Bride</h2>
+			</div>
+
 			{
-				profiles.map((profile) => (
-					<div class="pb-11"></div>
-					<div class="w-[250px] h-[350px]">
-						<div class="relative shrink-0 w-full h-full">
-							<img
-								alt=""
-								loading="lazy"
-								decoding="async"
-								data-nimg="fill"
-								class="rounded-full"
-								sizes="100vw"
-								src={profile.img}
-								style="position: absolute; height: 100%; width: 100%; inset: 0px; object-fit: cover; color: transparent;"
-							/>
+				profiles.map((profile, index) => (
+					<>
+						{index > 0 && (
+							<div class="my-8 flex flex-col items-center" data-animate="scale-bounce" data-animate-delay="400">
+								<div class="h-10 w-px" style="background: linear-gradient(to bottom, #c8956c, transparent);"></div>
+								<span class="satisfy text-4xl my-2" style="color: #c8956c;">&</span>
+								<div class="h-10 w-px" style="background: linear-gradient(to top, #c8956c, transparent);"></div>
+							</div>
+						)}
+
+						<div class="flex flex-col items-center">
+							<div class="relative w-[220px] h-[300px] profile-img-animate mb-6">
+								<div class="absolute -inset-2 rounded-full opacity-20" style="background: conic-gradient(from 0deg, transparent, #c8956c, transparent, #c8956c, transparent);"></div>
+								<div class="absolute -inset-1 rounded-full" style="background: #0a0a0f;"></div>
+								<div class="relative w-full h-full rounded-full overflow-hidden" style="box-shadow: 0 0 40px rgba(200,149,108,0.1);">
+									<img alt={profile.name} loading="lazy" decoding="async" class="w-full h-full object-cover" src={profile.img} />
+								</div>
+							</div>
+							<Profile name={profile.name} birthOrder={profile.birthOrder} parents={profile.parents} />
 						</div>
-					</div>
-					<Profile
-						name={profile.name}
-						birthOrder={profile.birthOrder}
-						parents={profile.parents}
-					/>
+					</>
 				))
 			}
 		</div>
 	</div>
 
+	<!-- Event -->
 	<div id="event" class="section">
-		<div class="min-h-full flex flex-col items-center h-wrap text-black py-20 px-8">
-			<div data-aos="fade-in" class="relative z-10 aos-init aos-animate">
+		<div class="min-h-full flex flex-col items-center h-wrap py-20 px-8" style="background: linear-gradient(180deg, #0a0a0f 0%, #12121e 50%, #0a0a0f 100%);">
+			<div data-animate="fade-up" class="relative z-10 w-full max-w-md">
 				<div class="grid grid-cols-1 gap-10 text-center py-12">
 					<DateTimeAndLocation
 						title="Holy Matrimony"
@@ -114,7 +133,9 @@ function toInstagram() {
 						time="13:00 WIB till finish"
 						locationUrl="https://maps.app.goo.gl/aG2qtFebrnGudcgN8"
 					/>
-					<div class="pb-11"></div>
+					<div class="flex justify-center">
+						<div class="h-px w-24" style="background: linear-gradient(to right, transparent, #c8956c30, transparent);"></div>
+					</div>
 					<DateTimeAndLocation
 						title="Reception"
 						placeName="Lembur Kuring"
@@ -128,49 +149,68 @@ function toInstagram() {
 		</div>
 	</div>
 
+	<!-- Gallery -->
 	<div
 		id="gallery"
-		class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap"
+		class="section flex flex-col flex-wrap justify-center items-center min-h-full h-wrap py-16"
+		style="background: linear-gradient(180deg, #0a0a0f 0%, #111118 50%, #0a0a0f 100%);"
 	>
-		<Title title="Our Moments" />
+		<div data-animate="fade-down" data-animate-delay="100">
+			<h2 class="satisfy text-4xl font-bold text-center" style="color: #f5e6d3;">Our Moments</h2>
+		</div>
 		<PhotoSwipeGallery images={images} />
 	</div>
 
-	<div id="wallet" class="section flex flex-col flex-wrap justify-center pt-20 pb-10 items-center h-wrap">
+	<!-- Gift -->
+	<div id="wallet" class="section flex flex-col flex-wrap justify-center pt-20 pb-10 items-center h-wrap px-6" style="background: linear-gradient(180deg, #0a0a0f 0%, #12121e 50%, #0a0a0f 100%);">
 		<Gift banks={banks} />
 	</div>
 
-	<div class="section flex flex-col flex-wrap justify-center pb-10 items-center content-center h-wrap">
-		<div class="p-10 mb-20 flex flex-col items-center content-center rounded-lg shadow-xl ">
-			<div data-aos="fade-in" class="relative z-10 aos-init aos-animate">
-				<h2 class="text-center satisfy text-4xl font-bold  mb-8 overflow-visible aos-init aos-animate"
-						data-aos="zoom-out">
+	<!-- Instagram -->
+	<div class="section flex flex-col flex-wrap justify-center pb-16 pt-4 items-center content-center h-wrap" style="background: #0a0a0f;">
+		<div class="p-10 flex flex-col items-center content-center rounded-2xl w-full max-w-sm" data-animate="fade-up" data-animate-delay="100"
+			style="background: rgba(255,255,255,0.03); border: 1px solid rgba(200,149,108,0.1);">
+			<div class="relative z-10">
+				<h2 class="text-center satisfy text-4xl font-bold mb-3 overflow-visible"
+						data-animate="zoom-out" data-animate-delay="200"
+						style="color: #f5e6d3;">
 						<span class="overflow-visible">Instagram Filter</span>
 					</h2>
-				<p class="text-base text-center overflow-visible mb-4">
+				<div class="flex items-center justify-center mb-5" data-animate="zoom-in" data-animate-delay="250">
+					<div class="h-px w-10" style="background: linear-gradient(to right, transparent, #c8956c);"></div>
+					<div class="mx-2 w-1.5 h-1.5 rotate-45" style="background: #c8956c;"></div>
+					<div class="h-px w-10" style="background: linear-gradient(to left, transparent, #c8956c);"></div>
+				</div>
+				<p class="text-sm text-center overflow-visible mb-6" data-animate="fade-up" data-animate-delay="300" style="color: #b0a8b8;">
 					<span class="overflow-visible">Share Your Moments with Instagram Filter.</span>
 				</p>
 			</div>
-			<InstagramButton client:load />
+			<div data-animate="scale-bounce" data-animate-delay="500">
+				<InstagramButton client:load />
+			</div>
 		</div>
 	</div>
 
-
-	<div class="section min-h-full flex flex-col items-center h-wrap text-center text-white ">
-		<div class="grid grid-cols-1 relative bg-gradient-to-b from-gray-100 to-gray-500">
-			<div class="bg-black "> 
-				<div class="aos-init aos-animate" data-aos="fade-down">
-					<div class="satisfy text-4xl font-bold pt-10">Thank you</div>
-					<div class="text-xs font-bold p-2">
+	<!-- Thank You -->
+	<div class="section min-h-full flex flex-col items-center h-wrap text-center" style="background: #0a0a0f;">
+		<div class="w-full relative">
+			<div class="pb-10 pt-12">
+				<div data-animate="fade-down" data-animate-delay="100">
+					<div class="satisfy text-4xl font-bold" data-animate="text-reveal" data-animate-delay="200" style="color: #f5e6d3;">Thank you</div>
+					<div class="text-xs font-bold p-2 px-6 leading-relaxed mt-2" data-animate="fade-up" data-animate-delay="400" style="color: #b0a8b8;">
 						It would be a joy and an honor for us if you, would kindly attend and bestow your blessings upon us.
 					</div>
-					<div class="satisfy text-3xl font-bold">Citra & Yohanes</div>
+					<div class="flex items-center justify-center my-4">
+						<div class="h-px w-8" style="background: linear-gradient(to right, transparent, #c8956c);"></div>
+						<div class="mx-2 w-1.5 h-1.5 rotate-45" style="background: #c8956c;"></div>
+						<div class="h-px w-8" style="background: linear-gradient(to left, transparent, #c8956c);"></div>
+					</div>
+					<div class="satisfy text-3xl font-bold pb-4" data-animate="fade-up" data-animate-delay="600" style="color: #e8c99a;">Citra & Yohanes</div>
 				</div>
 			</div>
-			<img src={g9.src} alt="Image" class="w-full h-auto" loading="lazy" decoding="async" />
-			
-			
-			
+			<div class="w-full" data-animate="fade-in" data-animate-delay="300">
+				<img src={g9.src} alt="Wedding photo" class="w-full h-auto block" loading="lazy" decoding="async" style="display: block; min-height: 200px;" />
+			</div>
 		</div>
 	</div>
 </>

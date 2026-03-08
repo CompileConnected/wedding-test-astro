@@ -27,6 +27,8 @@ Dari : Yohanes & Citra`
 		<meta name="referrer" content="no-referrer" />
 		<meta name="view-transition" content="same-origin" />
 		<style>
+			@reference "tailwindcss";
+
 			.step {
 				@apply mb-4;
 			}
@@ -82,30 +84,30 @@ Dari : Yohanes & Citra`
 
 
 	<script>
-		const input = document.getElementById('inputText')
+		const input = document.getElementById('inputText') as HTMLInputElement | null
 		const preview = document.getElementById('preview')
 
 		const copyButton = document.querySelector('button')
 
-		copyButton.addEventListener('click', () => {
+		copyButton?.addEventListener('click', () => {
 			// Get text from preview
-			const input = document.getElementById('inputText')
-			const text = document.getElementById('preview').innerText
+			const input = document.getElementById('inputText') as HTMLInputElement | null
+			const text = (document.getElementById('preview') as HTMLElement)?.innerText ?? ''
 			const snackbar = document.getElementById('snackbar')
 			const snackbarMessage = document.getElementById('snackbar-message')
 
-			snackbarMessage.innerHTML = `Undangan di copy untuk: ${input.value}`
+			if (snackbarMessage) snackbarMessage.innerHTML = `Undangan di copy untuk: ${input?.value ?? ''}`
 
-			snackbar.classList.remove('hidden')
+			snackbar?.classList.remove('hidden')
 
 			setTimeout(() => {
-				snackbar.classList.add('hidden')
+				snackbar?.classList.add('hidden')
 			}, 3000)
 			// Copy to clipboard
 			navigator.clipboard.writeText(text)
 		})
 
-		function makeText(name) {
+		function makeText(name: string) {
 			const url = encodeURI(`https://yohanes-citra.vercel.app/?to=${name}`)
 			const text = `Hi ${name}
 
@@ -130,8 +132,8 @@ Dari : Yohanes & Citra`
 			return text
 		}
 
-		input.addEventListener('input', () => {
-			preview.innerHTML = makeText(input.value)
+		input?.addEventListener('input', () => {
+			if (preview && input) preview.innerHTML = makeText(input.value)
 		})
 	</script>
 

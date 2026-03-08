@@ -1,9 +1,8 @@
 ---
 import '../styles/main.css'
-import smc from '../../public/social-media-cover2.jpg'
+import smc from '../assets/social-media-cover2.jpg'
 import '@fontsource/satisfy'
-import { ViewTransitions } from 'astro:transitions'
-import 'aos/dist/aos.css' // AOS styles
+import { ClientRouter } from 'astro:transitions'
 ---
 
 <!DOCTYPE html>
@@ -42,12 +41,13 @@ import 'aos/dist/aos.css' // AOS styles
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-		<ViewTransitions />
+		<ClientRouter />
 	</head>
-	<body class="select-none">
+	<body class="select-none" style="background-color: #0a0a0f;">
 		<main
 			id="main-content"
-			class="bg-white rounded-lg shadow-lg mx-auto max-w-screen-md md:max-w-screen-sm"
+			class="rounded-lg shadow-lg mx-auto max-w-screen-md md:max-w-screen-sm"
+			style="background: #0a0a0f;"
 		>
 			<slot />
 		</main>
@@ -58,10 +58,10 @@ import 'aos/dist/aos.css' // AOS styles
 			PhotoSwipeLightboxInit()
 		</script>
 		<script>
-			import { aosInit } from '../libs/js/aos'
+			import { initAllAnimations } from '../libs/js/animations'
 
 			// runs on initial page load
-			aosInit()
+			initAllAnimations()
 		</script>
 		<style is:global>
 			.satisfy {
@@ -77,7 +77,7 @@ import 'aos/dist/aos.css' // AOS styles
 			}
 			html {
 				font-family: system-ui, sans-serif;
-				background-color: #f6f6f6;
+				background-color: #0a0a0f;
 			}
 			code {
 				font-family:

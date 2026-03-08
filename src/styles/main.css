@@ -1,3 +1,45 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Animation base styles */
+[data-animate] {
+  will-change: transform, opacity;
+}
+
+.profile-img-animate {
+  will-change: transform, opacity;
+}
+
+.gallery-item {
+  will-change: transform, opacity;
+}
+
+.animate-line {
+  will-change: transform, opacity;
+  transform-origin: center;
+}
+
+/* Ambient floating elements */
+.ambient-float {
+  will-change: transform, opacity;
+}
+
+/* Smooth transitions for interactive elements */
+.animate-hover {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+}
+
+.animate-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.3);
+}
+
+/* Separator line decoration */
+.ornament-line {
+  background: linear-gradient(to right, transparent, #c8956c, transparent);
+}
+
+/* Subtle parallax-style scrolling for section backgrounds */
+.parallax-bg {
+  transition: transform 0.1s linear;
+}

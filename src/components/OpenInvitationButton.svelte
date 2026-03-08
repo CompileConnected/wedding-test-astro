@@ -4,20 +4,23 @@
 
 <button
 	type="button"
-	class="outline white md group relative border transition-all duration-300 inline-block outline-none active:outline-none items-center disabled:cursor-not-allowed appearance-none focus:outline-none active:ring-0 false h-10 px-6 text-sm text-white hover:text-black border-white hover:bg-white rounded-full"
+	class="animate-hover inline-block transition-all duration-300 outline-none h-10 px-6 text-sm rounded-full"
+	style="color: #f5e6d3; border: 1px solid rgba(200,149,108,0.5); background: rgba(200,149,108,0.12);"
 	on:click={() => {
 		isInvitationOpen.set(true)
 	}}
 	>
 	<span class="flex items-center h-full w-full justify-center gap-1 flex-nowrap whitespace-nowrap">
-		<iconify-icon icon="mdi:email" width="24" height="24"></iconify-icon>  Open
+		<iconify-icon icon="mdi:email" width="24" height="24" style="color: #c8956c;"></iconify-icon>  Open
 		<div class="h-2 w-2 relative -mr-2 ml-2">
 			<div
-				class="absolute left-0 top-0 transition-all duration-300 bg-white group-hover:bg-black w-2 h-2 rounded-full"
+				class="absolute left-0 top-0 transition-all duration-300 w-2 h-2 rounded-full"
+				style="background: #c8956c;"
 			>
 			</div>
 			<div
-				class="absolute left-0 top-0 transition-all duration-300 bg-white group-hover:bg-black w-2 h-2 rounded-full animate-ping"
+				class="absolute left-0 top-0 transition-all duration-300 w-2 h-2 rounded-full animate-ping"
+				style="background: #c8956c;"
 			>
 			</div>
 		</div>

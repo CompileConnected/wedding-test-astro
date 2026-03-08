@@ -9,7 +9,7 @@ const { images } = Astro.props
 ---
 
 <div
-	class="grid grid-cols-2 sm:grid-cols-3 gap-2 content-around pt-[2rem] px-10"
+	class="gallery-animate grid grid-cols-2 sm:grid-cols-3 gap-2 content-around pt-[2rem] px-8"
 	id="pswp-gallery"
 >
 	{
@@ -19,8 +19,9 @@ const { images } = Astro.props
 				data-pswp-width="2000"
 				data-pswp-height="2999"
 				target="_blank"
+				class="gallery-item rounded-lg overflow-hidden"
 			>
-				<img src={image.src} alt="Image" loading="lazy" decoding="async" class="w-full h-full" />
+				<img src={image.src} alt="Image" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
 			</a>
 		))
 	}
