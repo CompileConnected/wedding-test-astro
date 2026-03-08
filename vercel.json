@@ -13,7 +13,7 @@
         },
         {
           "key": "Permissions-Policy",
-          "value": "geolocation=(), microphone=(), camera=(), fullscreen=(self \"https://www.youtube.com\")"
+          "value": "geolocation=(), microphone=(), camera=()"
         },
         {
           "key": "X-XSS-Protection",
@@ -33,7 +33,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "object-src 'none'; frame-src 'self' youtube.com www.youtube.com youtube-nocookie.com www.youtube-nocookie.com"
+          "value": "object-src 'none'; frame-src 'self'"
         }
       ]
     }

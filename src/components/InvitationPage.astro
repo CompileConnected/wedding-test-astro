@@ -19,9 +19,7 @@ import cover from '../assets/cover.avif'
             <div class="satisfy text-center text-5xl font-bold" data-animate="fade-up" data-animate-delay="300">Yohanes & Citra</div>
             <div class="text-center mx-8 p-3" data-animate="fade-up" data-animate-delay="600">
                 <p class="text-xs">Dear, </p>
-                <h5 class="text-base font-bold overflow-visible">
-                    {Astro.url.searchParams.get('to')}
-                </h5>
+                <h5 id="guest-name" class="text-base font-bold overflow-visible"></h5>
             </div>
             <div data-animate="zoom-in" data-animate-delay="900">
                 <OpenInvitationButton client:load />
@@ -29,3 +27,9 @@ import cover from '../assets/cover.avif'
         </div>
     </div>
 </div>
+
+<script>
+    const name = new URLSearchParams(window.location.search).get('to')
+    const el = document.getElementById('guest-name')
+    if (el && name) el.textContent = name
+</script>
