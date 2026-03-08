@@ -19,9 +19,9 @@ import ContentPage from '../components/ContentPage.astro'
 <script>
     import { isInvitationOpen } from '../store/store'
     import { animateInvitationOpen } from '../libs/js/animations'
-    isInvitationOpen.subscribe((isOpen) => {
-        if (isOpen) {
-            animateInvitationOpen()
-        }
-    })
+	isInvitationOpen.subscribe((isOpen: boolean) => {
+		if (isOpen) {
+			animateInvitationOpen()
+		}
+	})
 </script>
