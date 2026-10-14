@@ -1,4 +1,4 @@
-import anime from 'animejs/lib/anime.es.js'
+import { animate, createTimeline, stagger } from 'animejs'
 
 /**
  * Animation presets for scroll-triggered animations using anime.js
@@ -9,7 +9,7 @@ const ANIMATION_PRESETS = {
     opacity: [0, 1],
     duration: 1000,
     delay,
-    easing: 'easeOutCubic',
+    ease: 'outCubic',
   }),
   'fade-up': (el, delay) => ({
     targets: el,
@@ -17,7 +17,7 @@ const ANIMATION_PRESETS = {
     translateY: [60, 0],
     duration: 1000,
     delay,
-    easing: 'easeOutCubic',
+    ease: 'outCubic',
   }),
   'fade-down': (el, delay) => ({
     targets: el,
@@ -25,7 +25,7 @@ const ANIMATION_PRESETS = {
     translateY: [-40, 0],
     duration: 900,
     delay,
-    easing: 'easeOutCubic',
+    ease: 'outCubic',
   }),
   'fade-left': (el, delay) => ({
     targets: el,
@@ -33,7 +33,7 @@ const ANIMATION_PRESETS = {
     translateX: [60, 0],
     duration: 900,
     delay,
-    easing: 'easeOutCubic',
+    ease: 'outCubic',
   }),
   'fade-right': (el, delay) => ({
     targets: el,
@@ -41,7 +41,7 @@ const ANIMATION_PRESETS = {
     translateX: [-60, 0],
     duration: 900,
     delay,
-    easing: 'easeOutCubic',
+    ease: 'outCubic',
   }),
   'zoom-in': (el, delay) => ({
     targets: el,
@@ -49,7 +49,7 @@ const ANIMATION_PRESETS = {
     scale: [0.85, 1],
     duration: 800,
     delay,
-    easing: 'easeOutBack',
+    ease: 'outBack',
   }),
   'zoom-out': (el, delay) => ({
     targets: el,
@@ -57,7 +57,7 @@ const ANIMATION_PRESETS = {
     scale: [1.15, 1],
     duration: 800,
     delay,
-    easing: 'easeOutCubic',
+    ease: 'outCubic',
   }),
   'slide-up': (el, delay) => ({
     targets: el,
@@ -65,7 +65,7 @@ const ANIMATION_PRESETS = {
     translateY: [100, 0],
     duration: 1100,
     delay,
-    easing: 'easeOutQuart',
+    ease: 'outQuart',
   }),
   'rotate-in': (el, delay) => ({
     targets: el,
@@ -74,15 +74,15 @@ const ANIMATION_PRESETS = {
     scale: [0.9, 1],
     duration: 900,
     delay,
-    easing: 'easeOutBack',
+    ease: 'outBack',
   }),
   'stagger-children': (el, delay) => ({
-    targets: el.children,
+    targets: [...el.children],
     opacity: [0, 1],
     translateY: [40, 0],
     duration: 800,
-    delay: anime.stagger(120, { start: delay }),
-    easing: 'easeOutCubic',
+    delay: stagger(120, { start: delay }),
+    ease: 'outCubic',
   }),
   'scale-bounce': (el, delay) => ({
     targets: el,
@@ -90,7 +90,7 @@ const ANIMATION_PRESETS = {
     scale: [0, 1],
     duration: 1000,
     delay,
-    easing: 'easeOutElastic(1, .6)',
+    ease: 'outElastic(1, .6)',
   }),
   'text-reveal': (el, delay) => ({
     targets: el,
@@ -98,7 +98,7 @@ const ANIMATION_PRESETS = {
     translateY: [20, 0],
     duration: 1200,
     delay,
-    easing: 'easeOutQuint',
+    ease: 'outQuint',
   }),
   'float-up': (el, delay) => ({
     targets: el,
@@ -106,7 +106,7 @@ const ANIMATION_PRESETS = {
     translateY: [30, 0],
     duration: 1400,
     delay,
-    easing: 'easeOutSine',
+    ease: 'outSine',
   }),
 }
 
@@ -170,7 +170,8 @@ export function initScrollAnimations() {
 
           const preset = ANIMATION_PRESETS[animType]
           if (preset) {
-            anime(preset(el, delay))
+            const { targets, ...params } = preset(el, delay)
+            animate(targets, params)
           }
 
           observer.unobserve(el)
@@ -196,25 +197,23 @@ export function animateInvitationOpen() {
   if (!invitation || !content) return
 
   // Fade out invitation with elegant scale
-  const tl = anime.timeline({ easing: 'easeInOutQuart' })
+  const tl = createTimeline({ defaults: { ease: 'inOutQuart' } })
 
-  tl.add({
-    targets: invitation,
+  tl.add(invitation, {
     opacity: [1, 0],
     scale: [1, 1.05],
     filter: ['blur(0px)', 'blur(8px)'],
     duration: 700,
-    complete: () => {
+    onComplete: () => {
       invitation.remove()
       content.classList.remove('hidden')
 
       // Animate content entrance
-      anime({
-        targets: content,
+      animate(content, {
         opacity: [0, 1],
         duration: 600,
-        easing: 'easeOutCubic',
-        complete: () => {
+        ease: 'outCubic',
+        onComplete: () => {
           // Re-init scroll animations for newly visible content
           initScrollAnimations()
         },
@@ -227,17 +226,16 @@ export function animateInvitationOpen() {
  * Animate invitation page entrance (cover page)
  */
 export function animateInvitationEntrance() {
-  const tl = anime.timeline({ easing: 'easeOutCubic' })
+  const tl = createTimeline({ defaults: { ease: 'outCubic' } })
 
   // Cover image subtle zoom
   const coverImg = document.querySelector('#invitation img')
   if (coverImg) {
-    tl.add({
-      targets: coverImg,
+    tl.add(coverImg, {
       scale: [1.1, 1],
       opacity: [0, 1],
       duration: 2000,
-      easing: 'easeOutQuart',
+      ease: 'outQuart',
     })
   }
 
@@ -245,12 +243,12 @@ export function animateInvitationEntrance() {
   const titleEl = document.querySelector('#invitation .satisfy.text-5xl')
   if (titleEl) {
     tl.add(
+      titleEl,
       {
-        targets: titleEl,
         opacity: [0, 1],
         translateY: [30, 0],
         duration: 1200,
-        easing: 'easeOutQuint',
+        ease: 'outQuint',
       },
       '-=1400'
     )
@@ -260,8 +258,8 @@ export function animateInvitationEntrance() {
   const dearSection = document.querySelector('#invitation .text-center.mx-8')
   if (dearSection) {
     tl.add(
+      dearSection,
       {
-        targets: dearSection,
         opacity: [0, 1],
         translateY: [20, 0],
         duration: 800,
@@ -274,12 +272,12 @@ export function animateInvitationEntrance() {
   const openBtn = document.querySelector('#invitation button')
   if (openBtn) {
     tl.add(
+      openBtn,
       {
-        targets: openBtn,
         opacity: [0, 1],
         scale: [0.8, 1],
         duration: 600,
-        easing: 'easeOutBack',
+        ease: 'outBack',
       },
       '-=400'
     )
@@ -293,13 +291,12 @@ export function initAmbientAnimations() {
   // Floating glow blobs
   const blobs = document.querySelectorAll('.ambient-float')
   blobs.forEach((blob, i) => {
-    anime({
-      targets: blob,
+    animate(blob, {
       translateY: [0, -15, 0],
       translateX: [0, i % 2 === 0 ? 8 : -8, 0],
       opacity: [0.1, 0.2, 0.1],
       duration: 4000 + i * 500,
-      easing: 'easeInOutSine',
+      ease: 'inOutSine',
       loop: true,
     })
   })
@@ -307,12 +304,11 @@ export function initAmbientAnimations() {
   // Pulsing decorative diamonds
   const diamonds = document.querySelectorAll('.pulse-diamond')
   diamonds.forEach((d, i) => {
-    anime({
-      targets: d,
+    animate(d, {
       scale: [1, 1.2, 1],
       opacity: [0.7, 1, 0.7],
       duration: 2000 + i * 300,
-      easing: 'easeInOutSine',
+      ease: 'inOutSine',
       loop: true,
     })
   })
@@ -335,13 +331,12 @@ export function animateTextReveal(selector) {
     el.appendChild(span)
   })
 
-  anime({
-    targets: el.querySelectorAll('span'),
+  animate(el.querySelectorAll('span'), {
     opacity: [0, 1],
     translateY: [20, 0],
     duration: 600,
-    delay: anime.stagger(40),
-    easing: 'easeOutQuint',
+    delay: stagger(40),
+    ease: 'outQuint',
   })
 }
 
@@ -354,12 +349,11 @@ export function initProfileAnimations() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          anime({
-            targets: entry.target,
+          animate(entry.target, {
             scale: [0.8, 1],
             opacity: [0, 1],
             duration: 1200,
-            easing: 'easeOutQuart',
+            ease: 'outQuart',
           })
           observer.unobserve(entry.target)
         }
@@ -386,13 +380,12 @@ export function initGalleryAnimations() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          anime({
-            targets: galleryContainer.querySelectorAll('.gallery-item'),
+          animate(galleryContainer.querySelectorAll('.gallery-item'), {
             opacity: [0, 1],
             scale: [0.85, 1],
             duration: 600,
-            delay: anime.stagger(80, { grid: [3, 3], from: 'center' }),
-            easing: 'easeOutCubic',
+            delay: stagger(80, { grid: [3, 3], from: 'center' }),
+            ease: 'outCubic',
           })
           observer.unobserve(entry.target)
         }
@@ -416,13 +409,12 @@ export function initGalleryAnimations() {
  */
 export function animateCounter(el, target, duration = 2000) {
   const obj = { count: 0 }
-  anime({
-    targets: obj,
+  animate(obj, {
     count: target,
     duration,
-    round: 1,
-    easing: 'easeOutExpo',
-    update: () => {
+    modifier: (v) => Math.round(v),
+    ease: 'outExpo',
+    onUpdate: () => {
       el.textContent = obj.count
     },
   })
@@ -437,12 +429,11 @@ export function initSeparatorAnimations() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          anime({
-            targets: entry.target,
+          animate(entry.target, {
             scaleX: [0, 1],
             opacity: [0, 1],
             duration: 800,
-            easing: 'easeOutQuart',
+            ease: 'outQuart',
           })
           observer.unobserve(entry.target)
         }
