@@ -4,24 +4,31 @@ import cover from '../assets/cover.avif'
 ---
 
 
-<div class="h-screen bg-slate-900" data-animate="fade-in">
+<div class="invitation-cover relative overflow-hidden bg-slate-900">
     <div class="absolute inset-0">
         <img
+            data-cover-image
             src={cover.src}
-            loading="lazy"
+            alt="Yohanes and Citra"
+            width={cover.width}
+            height={cover.height}
+            loading="eager"
+            fetchpriority="high"
             decoding="async"
-            class="w-full h-full object-cover mx-auto max-w-screen-md md:max-w-screen-sm transition-all grayscale-0 scale-100"
+            class="w-full h-full object-cover mx-auto max-w-screen-md md:max-w-screen-sm"
         />
     </div>
 
-    <div class="relative flex flex-col flex-wrap justify-end h-screen text-white">
+    <div class="absolute inset-0 pointer-events-none cover-shade" aria-hidden="true"></div>
+    <div data-cover-copy class="invitation-cover relative flex flex-col flex-wrap justify-end text-white">
         <div class="flex flex-col items-center content-center py-8">
-            <div class="satisfy text-center text-5xl font-bold" data-animate="fade-up" data-animate-delay="300">Yohanes & Citra</div>
-            <div class="text-center mx-8 p-3" data-animate="fade-up" data-animate-delay="600">
+            <div class="satisfy text-center text-5xl font-bold" data-cover-detail>Yohanes & Citra</div>
+            <div data-cover-rule class="cover-rule" aria-hidden="true"></div>
+            <div class="text-center mx-8 p-3" data-cover-detail>
                 <p class="text-xs">Dear, </p>
                 <h5 id="guest-name" class="text-base font-bold overflow-visible"></h5>
             </div>
-            <div data-animate="zoom-in" data-animate-delay="900">
+            <div data-cover-detail>
                 <OpenInvitationButton client:load />
             </div>
         </div>

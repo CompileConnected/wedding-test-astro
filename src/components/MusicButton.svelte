@@ -116,7 +116,9 @@
 	.bar {
 		display: block;
 		width: 3px;
-		height: 3px;
+		height: 14px;
+		transform: scaleY(0.22);
+		transform-origin: bottom;
 		border-radius: 2px;
 		background: linear-gradient(to top, #16213e, #3a3a6e);
 	}
@@ -141,10 +143,10 @@
 
 	@keyframes bounce {
 		from {
-			height: 3px;
+			transform: scaleY(0.22);
 		}
 		to {
-			height: 14px;
+			transform: scaleY(1);
 		}
 	}
 

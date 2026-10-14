@@ -1,26 +1,42 @@
 @import "tailwindcss";
 
-/* Animation base styles */
-[data-animate] {
-  will-change: transform, opacity;
-}
+/* Layers are promoted only while a reveal is running. */
+.animate-line { transform-origin: center; }
 
-.profile-img-animate {
-  will-change: transform, opacity;
-}
-
-.gallery-item {
-  will-change: transform, opacity;
-}
-
-.animate-line {
-  will-change: transform, opacity;
+.invitation-cover { height: 100vh; height: 100svh; }
+.cover-shade { background: linear-gradient(180deg, transparent 40%, rgba(10,10,15,.65)); }
+.cover-rule {
+  width: 5rem;
+  height: 1px;
+  margin-top: 1.25rem;
+  background: linear-gradient(90deg, transparent, #e8c99a, transparent);
   transform-origin: center;
 }
 
-/* Ambient floating elements */
-.ambient-float {
-  will-change: transform, opacity;
+/* Decorations run only in view; rotation from Tailwind stays intact. */
+.pulse-diamond.motion-in-view {
+  animation: diamond-breathe 3.8s ease-in-out infinite;
+}
+.ambient-float.motion-in-view {
+  animation: ambient-drift 6s ease-in-out infinite;
+}
+@keyframes diamond-breathe {
+  0%, 100% { transform: scale(1); opacity: .65; }
+  50% { transform: scale(1.14); opacity: 1; }
+}
+@keyframes ambient-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.motion-tab-hidden *, .motion-tab-hidden *::before, .motion-tab-hidden *::after {
+  animation-play-state: paused !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Smooth transitions for interactive elements */

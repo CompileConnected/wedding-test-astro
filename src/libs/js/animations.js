@@ -1,462 +1,187 @@
 import { animate, createTimeline, stagger } from 'animejs'
 
-/**
- * Animation presets for scroll-triggered animations using anime.js
- */
-const ANIMATION_PRESETS = {
-  'fade-in': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    duration: 1000,
-    delay,
-    ease: 'outCubic',
-  }),
-  'fade-up': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    translateY: [60, 0],
-    duration: 1000,
-    delay,
-    ease: 'outCubic',
-  }),
-  'fade-down': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    translateY: [-40, 0],
-    duration: 900,
-    delay,
-    ease: 'outCubic',
-  }),
-  'fade-left': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    translateX: [60, 0],
-    duration: 900,
-    delay,
-    ease: 'outCubic',
-  }),
-  'fade-right': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    translateX: [-60, 0],
-    duration: 900,
-    delay,
-    ease: 'outCubic',
-  }),
-  'zoom-in': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    scale: [0.85, 1],
-    duration: 800,
-    delay,
-    ease: 'outBack',
-  }),
-  'zoom-out': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    scale: [1.15, 1],
-    duration: 800,
-    delay,
-    ease: 'outCubic',
-  }),
-  'slide-up': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    translateY: [100, 0],
-    duration: 1100,
-    delay,
-    ease: 'outQuart',
-  }),
-  'rotate-in': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    rotate: [-8, 0],
-    scale: [0.9, 1],
-    duration: 900,
-    delay,
-    ease: 'outBack',
-  }),
-  'stagger-children': (el, delay) => ({
-    targets: [...el.children],
-    opacity: [0, 1],
-    translateY: [40, 0],
-    duration: 800,
-    delay: stagger(120, { start: delay }),
-    ease: 'outCubic',
-  }),
-  'scale-bounce': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    scale: [0, 1],
-    duration: 1000,
-    delay,
-    ease: 'outElastic(1, .6)',
-  }),
-  'text-reveal': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    translateY: [20, 0],
-    duration: 1200,
-    delay,
-    ease: 'outQuint',
-  }),
-  'float-up': (el, delay) => ({
-    targets: el,
-    opacity: [0, 1],
-    translateY: [30, 0],
-    duration: 1400,
-    delay,
-    ease: 'outSine',
-  }),
+// A single reveal lifecycle: content is registered only after the invitation opens.
+const revealSelector = '[data-animate], .profile-img-animate, .gallery-item, .animate-line'
+const active = new Set()
+const pending = new Set()
+const registered = new WeakSet()
+let revealObserver
+let ambientObserver
+let preference
+let initialized = false
+let opening = false
+let finishOpening
+let entrance
+
+const reducedMotion = () => preference?.matches ?? false
+const restore = (el) => {
+  el.style.removeProperty('opacity')
+  el.style.removeProperty('transform')
+  el.style.removeProperty('will-change')
 }
 
-/**
- * Set initial hidden state for animated elements
- */
-function setInitialState(el, animType) {
-  el.style.opacity = '0'
+function reveal(el, delay = 0) {
+  pending.delete(el)
+  if (reducedMotion()) return restore(el)
 
-  switch (animType) {
-    case 'fade-up':
-    case 'slide-up':
-      el.style.transform = 'translateY(60px)'
-      break
-    case 'fade-down':
-      el.style.transform = 'translateY(-40px)'
-      break
-    case 'fade-left':
-      el.style.transform = 'translateX(60px)'
-      break
-    case 'fade-right':
-      el.style.transform = 'translateX(-60px)'
-      break
-    case 'zoom-in':
-      el.style.transform = 'scale(0.85)'
-      break
-    case 'zoom-out':
-      el.style.transform = 'scale(1.15)'
-      break
-    case 'rotate-in':
-      el.style.transform = 'rotate(-8deg) scale(0.9)'
-      break
-    case 'scale-bounce':
-      el.style.transform = 'scale(0)'
-      break
-    case 'stagger-children':
-      Array.from(el.children).forEach((child) => {
-        child.style.opacity = '0'
-        child.style.transform = 'translateY(40px)'
-      })
-      el.style.opacity = '1'
-      break
-    default:
-      break
+  const type = el.dataset.animate
+  let motion = { translateY: [24, 0] }
+  let duration = 800
+  let ease = 'outQuint'
+  if (type === 'fade-in') motion = {}
+  if (type === 'fade-down') motion = { translateY: [-20, 0] }
+  if (type === 'fade-left') motion = { translateX: [28, 0] }
+  if (type === 'fade-right') motion = { translateX: [-28, 0] }
+  if (type === 'zoom-in') motion = { scale: [0.94, 1], translateY: [12, 0] }
+  if (type === 'zoom-out') motion = { scale: [1.045, 1] }
+  if (type === 'rotate-in') motion = { rotate: [-3, 0], translateY: [24, 0] }
+  if (type === 'scale-bounce') {
+    motion = { scale: [0.88, 1], translateY: [12, 0] }
+    ease = 'outBack(1.35)'
   }
-}
+  if (type === 'text-reveal') motion = { translateY: [30, 0], rotate: [-1, 0] }
+  if (el.matches('.profile-img-animate')) {
+    motion = { translateY: [36, 0], scale: [0.94, 1], rotate: [-2, 0] }
+    duration = 1100
+  }
+  if (el.matches('.gallery-item')) {
+    const index = [...el.parentElement.children].indexOf(el)
+    motion = { translateY: [32, 0], scale: [0.96, 1], rotate: [index % 2 ? 1.5 : -1.5, 0] }
+    duration = 900
+  }
+  if (el.matches('.animate-line')) {
+    motion = { scaleX: [0, 1] }
+    duration = 1000
+  }
 
-/**
- * Initialize scroll-triggered animations using IntersectionObserver + anime.js
- */
-export function initScrollAnimations() {
-  const animatedElements = document.querySelectorAll('[data-animate]')
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target
-          const animType = el.dataset.animate
-          const delay = parseInt(el.dataset.animateDelay || '0')
-
-          const preset = ANIMATION_PRESETS[animType]
-          if (preset) {
-            const { targets, ...params } = preset(el, delay)
-            animate(targets, params)
-          }
-
-          observer.unobserve(el)
-        }
-      })
+  el.style.willChange = 'transform, opacity'
+  const animation = animate(el, {
+    ...motion, opacity: [0, 1], duration, delay, ease,
+    onComplete: () => {
+      restore(el)
+      active.delete(animation)
     },
-    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-  )
-
-  animatedElements.forEach((el) => {
-    setInitialState(el, el.dataset.animate)
-    observer.observe(el)
   })
+  active.add(animation)
 }
 
-/**
- * Animate the invitation opening → content reveal transition
- */
+function prepareContent() {
+  const content = document.getElementById('content')
+  if (!content || reducedMotion() || !('IntersectionObserver' in window)) return
+
+  revealObserver ??= new IntersectionObserver((entries) => {
+    const visible = entries.filter((entry) => entry.isIntersecting)
+    // Stagger only the current viewport batch, including the actual responsive gallery rows.
+    const rhythm = stagger(65, { start: 30 })
+    visible.forEach((entry, index) => {
+      revealObserver.unobserve(entry.target)
+      const authoredDelay = Number(entry.target.dataset.animateDelay) || 0
+      const delay = Math.min(authoredDelay * 0.3, 150) + Math.min(rhythm(entry.target, index, visible.length), 195)
+      reveal(entry.target, delay)
+    })
+  }, { threshold: 0.06, rootMargin: '0px 0px 24px 0px' })
+
+  content.querySelectorAll(revealSelector).forEach((el) => {
+    if (registered.has(el)) return
+    registered.add(el)
+    // Animate the details, not both a large container and its descendants.
+    if (el.querySelector(revealSelector)) return
+    pending.add(el)
+    el.style.opacity = '0'
+    revealObserver.observe(el)
+  })
+
+  ambientObserver ??= new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      target.classList.toggle('motion-in-view', isIntersecting)
+    })
+  })
+  content.querySelectorAll('.pulse-diamond, .ambient-float').forEach((el) => ambientObserver.observe(el))
+}
+
+function settleMotion() {
+  entrance?.complete()
+  finishOpening?.()
+  revealObserver?.disconnect()
+  ambientObserver?.disconnect()
+  for (const animation of [...active]) animation.complete()
+  pending.forEach(restore)
+  pending.clear()
+  document.querySelectorAll('.motion-in-view').forEach((el) => el.classList.remove('motion-in-view'))
+}
+
 export function animateInvitationOpen() {
+  if (!initialized) initAllAnimations()
   const invitation = document.getElementById('invitation')
   const content = document.getElementById('content')
+  if (!invitation || !content || opening) return
+  opening = true
+  entrance?.complete()
 
-  if (!invitation || !content) return
-
-  // Fade out invitation with elegant scale
-  const tl = createTimeline({ defaults: { ease: 'inOutQuart' } })
-
-  tl.add(invitation, {
-    opacity: [1, 0],
-    scale: [1, 1.05],
-    filter: ['blur(0px)', 'blur(8px)'],
-    duration: 700,
-    onComplete: () => {
-      invitation.remove()
-      content.classList.remove('hidden')
-
-      // Animate content entrance
-      animate(content, {
-        opacity: [0, 1],
-        duration: 600,
-        ease: 'outCubic',
-        onComplete: () => {
-          // Re-init scroll animations for newly visible content
-          initScrollAnimations()
-        },
-      })
-    },
+  const button = invitation.querySelector('button')
+  if (button) button.disabled = true
+  const previousOverflow = document.body.style.overflow
+  const bounds = invitation.getBoundingClientRect()
+  // Keep the cover in place while the first section appears beneath it.
+  Object.assign(invitation.style, {
+    position: 'fixed', top: `${bounds.top}px`, left: `${bounds.left}px`,
+    width: `${bounds.width}px`, height: `${bounds.height}px`, zIndex: '40',
+    pointerEvents: 'none', overflow: 'hidden',
   })
-}
+  document.body.style.overflow = 'hidden'
+  prepareContent()
+  content.classList.remove('hidden')
+  content.inert = true
 
-/**
- * Animate invitation page entrance (cover page)
- */
-export function animateInvitationEntrance() {
-  const tl = createTimeline({ defaults: { ease: 'outCubic' } })
-
-  // Cover image subtle zoom
-  const coverImg = document.querySelector('#invitation img')
-  if (coverImg) {
-    tl.add(coverImg, {
-      scale: [1.1, 1],
-      opacity: [0, 1],
-      duration: 2000,
-      ease: 'outQuart',
-    })
+  finishOpening = () => {
+    invitation.remove()
+    content.inert = false
+    document.body.style.overflow = previousOverflow
+    const heading = content.querySelector('h2')
+    const focusTarget = document.getElementById('home') || heading
+    focusTarget?.setAttribute('tabindex', '-1')
+    focusTarget?.focus({ preventScroll: true })
+    finishOpening = undefined
   }
+  if (reducedMotion()) return finishOpening()
 
-  // Title text stagger
-  const titleEl = document.querySelector('#invitation .satisfy.text-5xl')
-  if (titleEl) {
-    tl.add(
-      titleEl,
-      {
-        opacity: [0, 1],
-        translateY: [30, 0],
-        duration: 1200,
-        ease: 'outQuint',
-      },
-      '-=1400'
-    )
-  }
-
-  // "Dear" text and name
-  const dearSection = document.querySelector('#invitation .text-center.mx-8')
-  if (dearSection) {
-    tl.add(
-      dearSection,
-      {
-        opacity: [0, 1],
-        translateY: [20, 0],
-        duration: 800,
-      },
-      '-=800'
-    )
-  }
-
-  // Button entrance with bounce
-  const openBtn = document.querySelector('#invitation button')
-  if (openBtn) {
-    tl.add(
-      openBtn,
-      {
-        opacity: [0, 1],
-        scale: [0.8, 1],
-        duration: 600,
-        ease: 'outBack',
-      },
-      '-=400'
-    )
-  }
+  invitation.style.willChange = 'transform, opacity'
+  const copy = invitation.querySelector('[data-cover-copy]')
+  const transition = createTimeline({ onComplete: () => {
+    finishOpening?.()
+    active.delete(transition)
+  } })
+  active.add(transition)
+  if (copy) transition.add(copy, { translateY: [0, -26], opacity: [1, 0], duration: 360, ease: 'inCubic' }, 0)
+  transition.add(invitation, {
+    translateY: [0, -28], scale: [1, 1.025], opacity: [1, 0],
+    duration: 800, ease: 'inOutCubic',
+  }, 100)
 }
 
-/**
- * Floating ambient animation for decorative elements
- */
-export function initAmbientAnimations() {
-  // Floating glow blobs
-  const blobs = document.querySelectorAll('.ambient-float')
-  blobs.forEach((blob, i) => {
-    animate(blob, {
-      translateY: [0, -15, 0],
-      translateX: [0, i % 2 === 0 ? 8 : -8, 0],
-      opacity: [0.1, 0.2, 0.1],
-      duration: 4000 + i * 500,
-      ease: 'inOutSine',
-      loop: true,
-    })
-  })
-
-  // Pulsing decorative diamonds
-  const diamonds = document.querySelectorAll('.pulse-diamond')
-  diamonds.forEach((d, i) => {
-    animate(d, {
-      scale: [1, 1.2, 1],
-      opacity: [0.7, 1, 0.7],
-      duration: 2000 + i * 300,
-      ease: 'inOutSine',
-      loop: true,
-    })
-  })
-}
-
-/**
- * Text character stagger reveal for headings
- */
-export function animateTextReveal(selector) {
-  const el = document.querySelector(selector)
-  if (!el) return
-
-  const text = el.textContent
-  el.innerHTML = ''
-  text.split('').forEach((char) => {
-    const span = document.createElement('span')
-    span.textContent = char === ' ' ? '\u00A0' : char
-    span.style.opacity = '0'
-    span.style.display = 'inline-block'
-    el.appendChild(span)
-  })
-
-  animate(el.querySelectorAll('span'), {
-    opacity: [0, 1],
-    translateY: [20, 0],
-    duration: 600,
-    delay: stagger(40),
-    ease: 'outQuint',
-  })
-}
-
-/**
- * Profile image reveal with elegant scale + border animation
- */
-export function initProfileAnimations() {
-  const profileImgs = document.querySelectorAll('.profile-img-animate')
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animate(entry.target, {
-            scale: [0.8, 1],
-            opacity: [0, 1],
-            duration: 1200,
-            ease: 'outQuart',
-          })
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.2 }
-  )
-
-  profileImgs.forEach((el) => {
-    el.style.opacity = '0'
-    el.style.transform = 'scale(0.8)'
-    observer.observe(el)
-  })
-}
-
-/**
- * Gallery items stagger entrance
- */
-export function initGalleryAnimations() {
-  const galleryContainer = document.querySelector('.gallery-animate')
-  if (!galleryContainer) return
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animate(galleryContainer.querySelectorAll('.gallery-item'), {
-            opacity: [0, 1],
-            scale: [0.85, 1],
-            duration: 600,
-            delay: stagger(80, { grid: [3, 3], from: 'center' }),
-            ease: 'outCubic',
-          })
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.1 }
-  )
-
-  galleryContainer
-    .querySelectorAll('.gallery-item')
-    .forEach((item) => {
-      item.style.opacity = '0'
-      item.style.transform = 'scale(0.85)'
-    })
-
-  observer.observe(galleryContainer)
-}
-
-/**
- * Smooth counter animation (for countdown timers, etc.)
- */
-export function animateCounter(el, target, duration = 2000) {
-  const obj = { count: 0 }
-  animate(obj, {
-    count: target,
-    duration,
-    modifier: (v) => Math.round(v),
-    ease: 'outExpo',
-    onUpdate: () => {
-      el.textContent = obj.count
-    },
-  })
-}
-
-/**
- * Separator line draw animation
- */
-export function initSeparatorAnimations() {
-  const separators = document.querySelectorAll('.animate-line')
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animate(entry.target, {
-            scaleX: [0, 1],
-            opacity: [0, 1],
-            duration: 800,
-            ease: 'outQuart',
-          })
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.3 }
-  )
-
-  separators.forEach((el) => {
-    el.style.opacity = '0'
-    el.style.transform = 'scaleX(0)'
-    observer.observe(el)
-  })
-}
-
-/**
- * Master initialization - call this on page load
- */
 export function initAllAnimations() {
-  animateInvitationEntrance()
-  initScrollAnimations()
-  initAmbientAnimations()
-  initProfileAnimations()
-  initGalleryAnimations()
-  initSeparatorAnimations()
+  if (initialized) return
+  initialized = true
+  preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+  preference.addEventListener('change', () => {
+    if (reducedMotion()) settleMotion()
+  })
+  const syncVisibility = () => document.documentElement.classList.toggle('motion-tab-hidden', document.hidden)
+  document.addEventListener('visibilitychange', syncVisibility)
+  syncVisibility()
+
+  const cover = document.querySelector('[data-cover-image]')
+  const details = [...document.querySelectorAll('[data-cover-detail]')]
+  const rule = document.querySelector('[data-cover-rule]')
+  if (!cover || reducedMotion()) return
+  const targets = [cover, ...details, ...(rule ? [rule] : [])]
+  targets.forEach((el) => { el.style.willChange = 'transform, opacity' })
+  entrance = createTimeline({ onComplete: () => targets.forEach(restore) })
+  // The photograph stays visible from first paint; only its framing slowly settles.
+  entrance.add(cover, { scale: [1.055, 1], duration: 1800, ease: 'outCubic' }, 0)
+  entrance.add(details, {
+    opacity: [0, 1], translateY: [22, 0], duration: 850,
+    delay: stagger(130), ease: 'outQuint',
+  }, 100)
+  if (rule) entrance.add(rule, { scaleX: [0, 1], opacity: [0, 1], duration: 1100, ease: 'outQuint' }, 180)
 }

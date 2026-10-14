@@ -26,7 +26,7 @@ const { banks } = Astro.props
 			<!-- Gift icon -->
 			<div class="flex justify-center mb-4" data-animate="scale-bounce" data-animate-delay="150">
 				<div class="w-14 h-14 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #c8956c, #e8c99a);">
-					<iconify-icon icon="mdi:gift-outline" width="28" height="28" style="color: #0a0a0f;"></iconify-icon>
+					<svg width="28" height="28" style="color: #0a0a0f;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="inline-block align-middle"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13"/><path d="M12 8H8a3 3 0 1 1 3-3l1 3Zm0 0h4a3 3 0 1 0-3-3l-1 3Z"/></svg>
 				</div>
 			</div>
 
@@ -63,7 +63,7 @@ const { banks } = Astro.props
 						style="background: rgba(255,255,255,0.04); border: 1px solid rgba(200,149,108,0.15); backdrop-filter: blur(8px);"
 					>
 						<div class="flex items-center justify-center gap-2 mb-3">
-							<iconify-icon icon="mdi:bank" width="18" height="18" style="color: #c8956c;"></iconify-icon>
+							<svg width="18" height="18" style="color: #c8956c;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="inline-block align-middle"><path d="m3 8 9-5 9 5H3Zm2 3v7m5-7v7m4-7v7m5-7v7M3 21h18"/></svg>
 							<h4 class="font-semibold text-sm uppercase tracking-wider" style="color: #e8c99a;">Bank {bank.bankName}</h4>
 						</div>
 
@@ -85,7 +85,7 @@ const { banks } = Astro.props
 									{bank.accountNumber}
 								</span>
 								<button class="hover:opacity-75 relative transition-opacity" style="color: #c8956c;">
-									<iconify-icon icon="carbon:copy" width="18" height="18" />
+									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: inline-block; vertical-align: middle;"><rect x="8" y="8" width="13" height="13" rx="1"/><path d="M16 5V3H3v13h2"/></svg>
 								</button>
 							</copy-button>
 						</div>

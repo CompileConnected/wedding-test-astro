@@ -2,7 +2,6 @@
 import '../styles/main.css'
 import smc from '../assets/social-media-cover2.jpg'
 import '@fontsource/satisfy'
-import { ClientRouter } from 'astro:transitions'
 ---
 
 <!DOCTYPE html>
@@ -17,9 +16,7 @@ import { ClientRouter } from 'astro:transitions'
 
 		<meta name="robots" content="noindex,nofollow" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-		<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
-		<meta name="view-transition" content="same-origin" />
 		<title>The Wedding of Yohanes & Citra</title>
 		<meta name="description" content="Sabtu, 25 November 2023" />
 
@@ -35,7 +32,6 @@ import { ClientRouter } from 'astro:transitions'
 		<meta name="twitter:description" content="Sabtu, 25 November 2023" />
 		<meta name="twitter:image" content={smc.src} />
 
-		<ClientRouter />
 	</head>
 	<body class="select-none" style="background-color: #0a0a0f;">
 		<main
